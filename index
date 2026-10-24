@@ -1,0 +1,3342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wise Business — Mixalto Ltd</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wise-green: #9fe870;
+      --wise-green-hover: #8ee05a;
+      --wise-green-tint: #e2f6d5;
+      --wise-green-tint-hover: #d3f1c0;
+      --wise-forest: #163300;
+      --wise-positive: #007a27;
+      --wise-surface: #f2f4f1;
+      --wise-surface-hover: #e7ebe5;
+      --wise-border: #e6e8e5;
+      --wise-text: #0e0f0c;
+      --wise-muted: #5d6159;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      margin: 0;
+      background-color: #ffffff;
+      color: var(--wise-text);
+      overflow-x: hidden;
+    }
+
+    /* Custom Wise Sidebar Scrollbar */
+    .sidebar-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-track {
+      background: #f8f9f7;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+      background: #cfd3cc;
+      border-radius: 3px;
+    }
+
+    /* Navigation Pill Active State */
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 16px;
+      border-radius: 9999px;
+      color: #454943;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .nav-item:hover {
+      background-color: #f6f8f5;
+      color: #0e0f0c;
+    }
+    .nav-item.active {
+      background-color: #f1f3ef;
+      color: #0e0f0c;
+      font-weight: 600;
+    }
+
+    /* Wise Action Buttons */
+    .btn-wise-primary {
+      background-color: var(--wise-green);
+      color: var(--wise-forest);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 7px 16px;
+      border-radius: 9999px;
+      transition: background-color 0.15s ease, transform 0.1s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .btn-wise-primary:hover {
+      background-color: var(--wise-green-hover);
+    }
+
+    .btn-wise-secondary {
+      background-color: var(--wise-green-tint);
+      color: var(--wise-forest);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 7px 16px;
+      border-radius: 9999px;
+      transition: background-color 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .btn-wise-secondary:hover {
+      background-color: var(--wise-green-tint-hover);
+    }
+
+    .btn-wise-neutral {
+      background-color: var(--wise-surface);
+      color: var(--wise-text);
+      font-weight: 600;
+      font-size: 13.5px;
+      padding: 7px 15px;
+      border-radius: 9999px;
+      transition: background-color 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .btn-wise-neutral:hover {
+      background-color: var(--wise-surface-hover);
+    }
+
+    /* Account Card Notch Styling */
+    .account-card {
+      background-color: #f3f5f2;
+      border-radius: 18px;
+      padding: 8px;
+      min-width: 280px;
+      width: 285px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background-color 0.15s ease;
+    }
+    .account-header-banner {
+      height: 54px;
+      border-radius: 12px 12px 4px 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .account-header-notch {
+      width: 44px;
+      height: 14px;
+      background-color: #f3f5f2;
+      border-radius: 999px;
+      position: absolute;
+      bottom: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    /* Dashed Cards for Payments */
+    .dashed-card {
+      border: 1px dashed #c8ccc5;
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+      background: #ffffff;
+    }
+    .dashed-card:hover {
+      background-color: #fafbfa;
+      border-color: #9ea49b;
+    }
+
+    .solid-card {
+      background-color: #f2f4f1;
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+    .solid-card:hover {
+      background-color: #eaede8;
+    }
+
+    /* Transactions Row */
+    .tx-row {
+      display: grid;
+      grid-template-columns: 145px 1fr 110px 140px 28px;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid #eff1ee;
+      cursor: pointer;
+      transition: background-color 0.12s ease;
+      background-color: #ffffff;
+    }
+    .tx-row:hover {
+      background-color: #f2f4f1;
+      border-radius: 10px;
+    }
+    .tx-row.highlighted-first {
+      background-color: #f2f4f1;
+      border-radius: 10px;
+      margin: 4px 6px;
+      padding: 16px 14px;
+      border-bottom: none;
+    }
+
+    /* Hide scrollbar for horizontal cards */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="flex min-h-screen bg-white text-[#0e0f0c]">
+
+  <!-- ==================== LEFT SIDEBAR ==================== -->
+  <aside class="w-[242px] fixed top-0 left-0 bottom-0 border-r border-[#e6e8e5] bg-white flex flex-col z-30">
+    <!-- Wise Logo (Exact Geometric Flag + WISE Wordmark matching screenshot) -->
+    <div class="pt-9 pb-7 px-8 flex items-center cursor-pointer group" onclick="switchView('home')">
+      <svg class="h-[23px] w-auto text-[#163300] transition-transform duration-150 group-hover:scale-[1.02]" viewBox="0 0 116 26" fill="currentColor">
+        <!-- Exact Wise Flag Icon -->
+        <path d="M4.2 2h18.4l-6.3 15.2h-4.7l4.2-10.4H9.4l2.1 4.4H6.8L2.8 2h1.4zm-3.2 21.5l2.2-4.6h16.3l-2.2 4.6H1z"/>
+        <!-- Exact Bold Slanted WISE Wordmark -->
+        <path d="M28.2 23.5L25.4 2h5.2l1.4 13.8L36.8 2h4.6l1.7 13.8L47.7 2h5.1l-6.8 21.5h-5.2l-1.7-13.4-4.7 13.4h-6.2zm27.4 0L59.4 2h5.4l-3.8 21.5h-5.4zm18.1.4c-5.8 0-9.4-2.5-9.5-6.9h5.2c.2 1.8 1.7 2.8 4.4 2.8 2.4 0 4-.9 4-2.4 0-1.3-.9-2-3.4-2.5l-2.7-.6c-4.3-.9-6.4-2.8-6.4-6.1 0-4.1 3.7-6.7 9.1-6.7 5.3 0 8.8 2.5 9 6.6h-5.1c-.2-1.6-1.6-2.5-3.9-2.5-2.2 0-3.7.9-3.7 2.3 0 1.2.9 1.9 3.3 2.4l2.7.6c4.5 1 6.6 2.8 6.6 6.1 0 4.3-3.9 6.9-9.6 6.9zm23.5 0c-6.4 0-10.3-4.1-10.3-10.2 0-6.8 4.6-12.1 11.4-12.1 6.3 0 10 4 10 9.9 0 .9-.1 1.9-.3 2.7H92.1c-.1 3.3 1.8 5.2 5 5.2 2.2 0 3.8-.9 4.6-2.4h5.1c-1.3 4.3-5 6.9-9.6 6.9zm-4.6-13.2h10.4c.1-2.9-1.6-4.7-4.6-4.7-3 0-5.2 1.8-5.8 4.7z"/>
+      </svg>
+    </div>
+
+    <!-- Scrollable Menu Area (Strictly Home, Cards, Transactions, Payments, Team) -->
+    <div class="flex-1 overflow-y-auto sidebar-scroll px-4 pb-6 space-y-1.5 mt-4">
+      
+      <!-- Home -->
+      <div id="nav-home" class="nav-item active" onclick="switchView('home')">
+        <div class="flex items-center gap-3.5">
+          <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5L12 3l9 7.5v9a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 19.5v-9z"/>
+          </svg>
+          <span>Home</span>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div id="nav-cards" class="nav-item" onclick="switchView('cards')">
+        <div class="flex items-center gap-3.5">
+          <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <rect x="2.5" y="5" width="19" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.5 10h4.5v4H2.5"/>
+          </svg>
+          <span>Cards</span>
+        </div>
+      </div>
+
+      <!-- Transactions -->
+      <div id="nav-transactions" class="nav-item" onclick="switchView('transactions')">
+        <div class="flex items-center gap-3.5">
+          <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h2M9 6h11M4 12h2m3 0h11M4 18h2m3 0h11"/>
+          </svg>
+          <span>Transactions</span>
+        </div>
+      </div>
+
+      <!-- Payments -->
+      <div id="nav-payments" class="nav-item" onclick="switchView('payments')">
+        <div class="flex items-center gap-3.5">
+          <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 10l5-5m0 0l5 5m-5-5v14"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 14l-5 5m0 0l-5-5"/>
+          </svg>
+          <span>Payments</span>
+        </div>
+      </div>
+
+      <!-- Team -->
+      <div id="nav-team" class="nav-item" onclick="switchView('team')">
+        <div class="flex items-center gap-3.5">
+          <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+          <span>Team</span>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN CONTENT AREA ==================== -->
+  <main class="flex-1 ml-[242px] min-h-screen flex flex-col">
+    
+    <!-- Top Header Bar -->
+    <header class="w-full max-w-[1160px] mx-auto pt-7 pb-4 px-8 flex items-center justify-between">
+      <!-- Left Back Button -->
+      <div>
+        <button id="top-back-btn" onclick="handleBackClick()" class="hidden w-11 h-11 rounded-full bg-[#f2f4f1] hover:bg-[#e5e8e3] flex items-center justify-center transition">
+          <svg class="w-5 h-5 text-[#163300]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m0 0l6-6m-6 6l6 6"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Right Header Controls: Earn €100, Open +, Mixalto Ltd -->
+      <div class="flex items-center gap-3.5">
+        <button onclick="openFeatureModal('referral')" class="btn-wise-primary text-[13.5px] py-1.5 px-4">
+          Earn €100
+        </button>
+
+        <button id="header-open-btn" onclick="openFeatureModal('open-balance')" class="btn-wise-secondary text-[13.5px] py-1.5 px-4">
+          <span>Open</span>
+          <span class="text-base leading-none font-normal">+</span>
+        </button>
+
+        <!-- Profile Pill (Opens Dedicated ML Mixalto Ltd Hub) -->
+        <div onclick="switchView('profile')" class="flex items-center gap-2.5 pl-1 pr-2.5 py-1 rounded-full hover:bg-[#f2f4f1] cursor-pointer transition">
+          <div class="relative w-10 h-10 rounded-full bg-[#f2f4f1] flex items-center justify-center font-bold text-[14px] text-[#0e0f0c]">
+            ML
+            <span class="absolute top-0 right-0 w-3 h-3 bg-[#d92d20] border-2 border-white rounded-full"></span>
+          </div>
+          <span class="text-[14px] font-medium text-[#0e0f0c]">Mixalto Ltd</span>
+          <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- Centered Content Container -->
+    <div class="w-full max-w-[920px] mx-auto px-8 pb-20 pt-3">
+
+      <!-- ===================================================================== -->
+      <!-- VIEW 1: HOME VIEW                                                     -->
+      <!-- ===================================================================== -->
+      <section id="view-home" class="space-y-10">
+        
+        <!-- Total Balance & Action Buttons -->
+        <div>
+          <div class="text-[14px] text-[#5d6159] font-normal mb-0.5">Total balance</div>
+          <div class="flex items-center gap-2.5 mb-5">
+            <h1 id="home-total-balance-text" class="text-[28px] font-extrabold tracking-tight text-[#0e0f0c]">9,080.00 EUR</h1>
+            <button onclick="switchView('balance')" title="View balance breakdown" class="w-7 h-7 rounded-full bg-[#f2f4f1] hover:bg-[#e4e7e2] flex items-center justify-center transition">
+              <svg class="w-4 h-4 text-[#163300]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 10c2.5 3.5 6 5 9 5s6.5-1.5 9-5M6 13.5l-1.5 2M18 13.5l1.5 2M10 15l-.5 2.2M14 15l.5 2.2"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Action Pills -->
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button onclick="openFeatureModal('send-money')" class="btn-wise-primary">Send</button>
+            <button onclick="openFeatureModal('add-money')" class="btn-wise-secondary">Add money</button>
+            <button onclick="openFeatureModal('get-paid')" class="btn-wise-secondary">
+              <span>Get paid</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <button onclick="openFeatureModal('pay-invoices')" class="btn-wise-secondary">Pay invoice</button>
+          </div>
+        </div>
+
+        <!-- Horizontal Account Cards (Current account & Marketing) -->
+        <div class="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+          
+          <!-- Card 1: Current account -->
+          <div class="account-card">
+            <div>
+              <!-- Top Graphic Banner -->
+              <div class="account-header-banner bg-gradient-to-r from-[#5a6085] via-[#2c7a3f] to-[#1a752c]">
+                <div class="absolute inset-x-0 bottom-0 top-3 bg-gradient-to-r from-[#134e1b] via-[#1c8730] to-[#166d26] rounded-t-lg px-3.5 flex items-center justify-between text-white">
+                  <span onclick="switchView('cards')" class="text-[13px] font-semibold flex items-center gap-1 cursor-pointer hover:underline">
+                    <span id="home-card-count-badge">2 cards</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                  </span>
+                  <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M4.2 2h18.4l-6.3 15.2h-4.7l4.2-10.4H9.4l2.1 4.4H6.8L2.8 2h1.4zm-3.2 21.5l2.2-4.6h16.3l-2.2 4.6H1z"/>
+                  </svg>
+                </div>
+                <div class="account-header-notch"></div>
+              </div>
+
+              <!-- Title -->
+              <div class="px-3 pt-4 pb-3 flex items-center justify-between cursor-pointer hover:opacity-80" onclick="openAccountDetailsModal('EUR')">
+                <div>
+                  <h3 class="text-[18px] font-bold text-[#0e0f0c] leading-snug">Current account</h3>
+                  <p class="text-[13px] text-[#5d6159]">€9,080.00 • 7 currencies</p>
+                </div>
+                <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
+
+              <!-- Currency Rows -->
+              <div class="px-3 space-y-3.5 mt-1">
+                <!-- EUR -->
+                <div class="flex items-center justify-between text-[14px] cursor-pointer hover:bg-[#e7ebe5] p-1 -mx-1 rounded-lg transition" onclick="openAccountDetailsModal('EUR')">
+                  <div class="flex items-center gap-3">
+                    <div class="w-6 h-6 rounded-full bg-[#003399] flex items-center justify-center shrink-0">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="#FFCC00">
+                        <circle cx="12" cy="4" r="1.1"/><circle cx="12" cy="20" r="1.1"/><circle cx="4" cy="12" r="1.1"/><circle cx="20" cy="12" r="1.1"/>
+                        <circle cx="6.3" cy="6.3" r="1.1"/><circle cx="17.7" cy="6.3" r="1.1"/><circle cx="6.3" cy="17.7" r="1.1"/><circle cx="17.7" cy="17.7" r="1.1"/>
+                      </svg>
+                    </div>
+                    <span class="text-[#0e0f0c] font-medium">€9,080.00</span>
+                  </div>
+                  <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </div>
+
+                <!-- AED -->
+                <div class="flex items-center justify-between text-[14px] cursor-pointer hover:bg-[#e7ebe5] p-1 -mx-1 rounded-lg transition" onclick="openAccountDetailsModal('AED')">
+                  <div class="flex items-center gap-3">
+                    <svg class="w-6 h-6 rounded-full shrink-0" viewBox="0 0 24 24">
+                      <clipPath id="uaeClip"><circle cx="12" cy="12" r="12"/></clipPath>
+                      <g clip-path="url(#uaeClip)">
+                        <rect x="6" y="0" width="18" height="8" fill="#00732f"/>
+                        <rect x="6" y="8" width="18" height="8" fill="#ffffff"/>
+                        <rect x="6" y="16" width="18" height="8" fill="#000000"/>
+                        <rect x="0" y="0" width="7" height="24" fill="#ff0000"/>
+                      </g>
+                    </svg>
+                    <span class="text-[#0e0f0c]">AED 0.00</span>
+                  </div>
+                  <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </div>
+
+                <!-- CAD -->
+                <div class="flex items-center justify-between text-[14px] cursor-pointer hover:bg-[#e7ebe5] p-1 -mx-1 rounded-lg transition" onclick="openAccountDetailsModal('CAD')">
+                  <div class="flex items-center gap-3">
+                    <svg class="w-6 h-6 rounded-full shrink-0" viewBox="0 0 24 24">
+                      <clipPath id="cadClip"><circle cx="12" cy="12" r="12"/></clipPath>
+                      <g clip-path="url(#cadClip)">
+                        <rect x="0" y="0" width="6" height="24" fill="#ff0000"/>
+                        <rect x="6" y="0" width="12" height="24" fill="#ffffff"/>
+                        <rect x="18" y="0" width="6" height="24" fill="#ff0000"/>
+                        <path d="M12 6l1.5 3h2l-1.5 2 1 2.5-3-1.5-3 1.5 1-2.5-1.5-2h2z" fill="#ff0000"/>
+                      </g>
+                    </svg>
+                    <span class="text-[#0e0f0c]">C$0.00</span>
+                  </div>
+                  <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Account details button -->
+            <div class="px-3 pt-5 pb-2">
+              <button onclick="openAccountDetailsModal('EUR')" class="bg-[#e2e5e0] hover:bg-[#d5d9d2] text-[#0e0f0c] font-semibold text-[12.5px] py-1.5 px-3.5 rounded-full inline-flex items-center gap-1.5 transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M4 10v8m4-8v8m4-8v8m4-8v8m4-8v8M2 18h20M12 4l9 6H3l9-6z"/>
+                </svg>
+                <span>Account details</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: Marketing -->
+          <div class="account-card">
+            <div>
+              <div class="account-header-banner bg-[#e3e6e1]">
+                <div class="account-header-notch"></div>
+              </div>
+
+              <div class="px-3 pt-4 pb-3 flex items-center justify-between cursor-pointer hover:opacity-80" onclick="openAccountDetailsModal('EUR')">
+                <div>
+                  <h3 class="text-[18px] font-bold text-[#0e0f0c] leading-snug">Marketing</h3>
+                  <p class="text-[13px] text-[#5d6159]">€0.00</p>
+                </div>
+                <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
+
+              <div class="px-3 space-y-3.5 mt-1">
+                <!-- EUR -->
+                <div class="flex items-center justify-between text-[14px] cursor-pointer hover:bg-[#e7ebe5] p-1 -mx-1 rounded-lg transition" onclick="openAccountDetailsModal('EUR')">
+                  <div class="flex items-center gap-3">
+                    <div class="w-6 h-6 rounded-full bg-[#003399] flex items-center justify-center shrink-0">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="#FFCC00">
+                        <circle cx="12" cy="4" r="1.1"/><circle cx="12" cy="20" r="1.1"/><circle cx="4" cy="12" r="1.1"/><circle cx="20" cy="12" r="1.1"/>
+                        <circle cx="6.3" cy="6.3" r="1.1"/><circle cx="17.7" cy="6.3" r="1.1"/><circle cx="6.3" cy="17.7" r="1.1"/><circle cx="17.7" cy="17.7" r="1.1"/>
+                      </svg>
+                    </div>
+                    <span class="text-[#0e0f0c]">€0.00</span>
+                  </div>
+                  <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="px-3 pt-5 pb-2">
+              <button onclick="openAccountDetailsModal('EUR')" class="bg-[#e2e5e0] hover:bg-[#d5d9d2] text-[#0e0f0c] font-semibold text-[12.5px] py-1.5 px-3.5 rounded-full inline-flex items-center gap-1.5 transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M4 10v8m4-8v8m4-8v8m4-8v8m4-8v8M2 18h20M12 4l9 6H3l9-6z"/>
+                </svg>
+                <span>Account details</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Pay Invoices Promo Banner -->
+        <div id="pay-invoices-promo">
+          <h2 class="text-[20px] font-bold text-[#0e0f0c] mb-4">Pay invoices</h2>
+          <div class="relative border border-[#e6e8e5] rounded-[18px] py-9 px-6 text-center bg-white">
+            <button onclick="document.getElementById('pay-invoices-promo').style.display='none'" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#f2f4f1] hover:bg-[#e4e7e2] flex items-center justify-center text-[#0e0f0c] transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+
+            <div class="w-14 h-14 mx-auto mb-3 flex items-center justify-center">
+              <svg class="w-12 h-12" viewBox="0 0 64 64" fill="none">
+                <rect x="18" y="8" width="28" height="38" rx="3" transform="rotate(-10 18 8)" fill="#9fe870" stroke="#163300" stroke-width="2"/>
+                <rect x="22" y="14" width="28" height="38" rx="3" transform="rotate(6 22 14)" fill="#7ad943" stroke="#163300" stroke-width="2"/>
+                <path d="M27 25h14M27 32h14M27 39h9" stroke="#163300" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="42" cy="40" r="4" fill="#163300"/>
+              </svg>
+            </div>
+
+            <h3 class="text-[16px] font-bold text-[#0e0f0c] mb-2">Try a smarter way to pay invoices</h3>
+            <p class="text-[13.5px] text-[#5d6159] max-w-[540px] mx-auto leading-relaxed mb-6">
+              Forward them to a dedicated email, or upload an image, PDF or screenshot. We'll input the details, so you just need to review and pay.
+            </p>
+
+            <div class="flex items-center justify-center gap-3">
+              <button onclick="openFeatureModal('pay-invoices')" class="btn-wise-primary px-6 py-2.5">Get started</button>
+              <button onclick="openFeatureModal('pay-invoices')" class="btn-wise-neutral px-6 py-2.5">Learn more</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Home Transactions Preview (Updated to latest Oct 24, 2026 transactions) -->
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-[20px] font-bold text-[#0e0f0c]">Transactions</h2>
+            <button onclick="switchView('transactions')" class="text-[13.5px] font-semibold text-[#163300] underline hover:opacity-80">See all</button>
+          </div>
+
+          <div id="home-transactions-preview" class="space-y-3">
+            <!-- Dynamically populated with top 3 latest transactions -->
+          </div>
+        </div>
+
+        <!-- Your Returns Section -->
+        <div>
+          <div class="flex items-center justify-between mb-3.5">
+            <h2 class="text-[20px] font-bold text-[#0e0f0c]">Your returns</h2>
+            <button onclick="openFeatureModal('interest-jar')" class="text-[13.5px] font-semibold text-[#163300] underline hover:opacity-80">Explore</button>
+          </div>
+
+          <div onclick="openFeatureModal('interest-jar')" class="dashed-card py-5 px-5 mb-3">
+            <div class="flex items-center gap-4">
+              <div class="relative w-8 h-8">
+                <div class="w-6 h-6 rounded-full bg-[#003399] flex items-center justify-center">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="#FFCC00">
+                    <circle cx="12" cy="4" r="1.2"/><circle cx="12" cy="20" r="1.2"/><circle cx="4" cy="12" r="1.2"/><circle cx="20" cy="12" r="1.2"/>
+                  </svg>
+                </div>
+                <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#9fe870] text-[#163300] flex items-center justify-center text-[12px] font-bold">+</span>
+              </div>
+              <span class="text-[13.5px] text-[#454943]">Your EUR isn't growing yet — start earning a return</span>
+            </div>
+            <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </div>
+          <p class="text-[12.5px] text-[#5d6159]">Capital at risk. Growth not guaranteed.</p>
+        </div>
+
+        <!-- Transfer Calculator Section -->
+        <div>
+          <h2 class="text-[20px] font-bold text-[#0e0f0c] mb-4">Transfer calculator</h2>
+
+          <div class="bg-[#f2f4f1] rounded-[18px] p-7 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <!-- Left Chart Column -->
+            <div class="md:col-span-6">
+              <div class="text-[19px] font-bold text-[#0e0f0c] mb-5">1 EUR = 1.0865 USD</div>
+
+              <div class="flex items-stretch gap-3">
+                <!-- Line Graph Box -->
+                <div class="flex-1 relative h-[185px] border-r border-b border-[#dadcd8]">
+                  <svg class="w-full h-full overflow-visible" viewBox="0 0 280 170" preserveAspectRatio="none">
+                    <line x1="0" y1="5" x2="280" y2="5" stroke="#dcdfda" stroke-dasharray="2,2" />
+                    <line x1="0" y1="88" x2="280" y2="88" stroke="#dcdfda" stroke-dasharray="2,2" />
+                    <polyline
+                      fill="none"
+                      stroke="#163300"
+                      stroke-width="1.8"
+                      stroke-linejoin="round"
+                      points="0,138 10,162 20,129 30,123 40,145 50,121 60,145 70,115 80,170 90,133 102,136 112,133 122,150 132,113 142,157 152,144 162,141 174,139 188,160 198,120 208,139 228,64 238,65 247,57 254,79 266,24 277,4 282,25"
+                    />
+                    <circle cx="282" cy="25" r="12" fill="#163300" fill-opacity="0.12" />
+                    <circle cx="282" cy="25" r="3.5" fill="#163300" stroke="#ffffff" stroke-width="1.5" />
+                  </svg>
+                  <div class="flex justify-between text-[12.5px] text-[#5d6159] mt-2.5">
+                    <span>Sep 24</span>
+                    <span>Today</span>
+                  </div>
+                </div>
+
+                <!-- Y-Axis Labels -->
+                <div class="flex flex-col justify-between text-[12px] text-[#5d6159] pb-1">
+                  <span>1.09</span>
+                  <span>1.08</span>
+                  <span>1.07</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Inputs Column -->
+            <div class="md:col-span-6 space-y-2.5">
+              <!-- Input 1 (EUR) -->
+              <div class="relative">
+                <div class="bg-white rounded-xl px-4 py-3.5 flex items-center justify-between border border-transparent focus-within:border-[#163300]">
+                  <input id="calc-eur" type="text" value="1,000.00" oninput="updateCalculator('eur')" class="text-[17px] font-bold text-[#0e0f0c] bg-transparent outline-none w-full" />
+                  <div onclick="openAccountDetailsModal('EUR')" class="flex items-center gap-2 shrink-0 cursor-pointer pl-2">
+                    <div class="w-6 h-6 rounded-full bg-[#003399] flex items-center justify-center shrink-0">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="#FFCC00">
+                        <circle cx="12" cy="4" r="1.2"/><circle cx="12" cy="20" r="1.2"/><circle cx="4" cy="12" r="1.2"/><circle cx="20" cy="12" r="1.2"/>
+                        <circle cx="6.3" cy="6.3" r="1.2"/><circle cx="17.7" cy="6.3" r="1.2"/><circle cx="6.3" cy="17.7" r="1.2"/><circle cx="17.7" cy="17.7" r="1.2"/>
+                      </svg>
+                    </div>
+                    <span class="font-bold text-[14.5px]">EUR</span>
+                    <svg class="w-4 h-4 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                  </div>
+                </div>
+
+                <!-- Swap Circle Icon -->
+                <button onclick="swapCalculator()" class="absolute left-1/2 -bottom-4 -translate-x-1/2 w-7 h-7 rounded-full bg-[#f2f4f1] border border-[#e2e5e0] flex items-center justify-center z-10 hover:bg-[#e5e8e3]">
+                  <svg class="w-3.5 h-3.5 text-[#163300]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Input 2 (USD) -->
+              <div class="bg-white rounded-xl px-4 py-3.5 flex items-center justify-between border border-transparent focus-within:border-[#163300]">
+                <input id="calc-usd" type="text" value="1,081.94" oninput="updateCalculator('usd')" class="text-[17px] font-bold text-[#0e0f0c] bg-transparent outline-none w-full" />
+                <div onclick="openAccountDetailsModal('USD')" class="flex items-center gap-2 shrink-0 cursor-pointer pl-2">
+                  <svg class="w-6 h-6 rounded-full" viewBox="0 0 24 24">
+                    <clipPath id="usdClipCalc"><circle cx="12" cy="12" r="12"/></clipPath>
+                    <g clip-path="url(#usdClipCalc)">
+                      <rect width="24" height="24" fill="#ffffff"/>
+                      <rect y="0" width="24" height="2" fill="#B22234"/><rect y="4" width="24" height="2" fill="#B22234"/>
+                      <rect y="8" width="24" height="2" fill="#B22234"/><rect y="12" width="24" height="2" fill="#B22234"/>
+                      <rect y="16" width="24" height="2" fill="#B22234"/><rect y="20" width="24" height="2" fill="#B22234"/>
+                      <rect width="12" height="12" fill="#3C3B6E"/>
+                    </g>
+                  </svg>
+                  <span class="font-bold text-[14.5px]">USD</span>
+                  <svg class="w-4 h-4 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+              </div>
+
+              <!-- Fee & Arrival Info Box -->
+              <div onclick="openFeatureModal('fee-breakdown')" class="border border-[#dcdfda] rounded-xl grid grid-cols-2 py-2.5 px-3 text-center my-2 cursor-pointer hover:bg-[#e7ebe5] transition">
+                <div class="border-r border-[#dcdfda]">
+                  <div class="text-[12px] text-[#5d6159] flex items-center justify-center gap-1">
+                    <span>Includes fees</span>
+                    <svg class="w-3.5 h-3.5 text-[#163300]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 014.5 1.5c0 1.5-2 2-2 3.5m0 3h.01"/>
+                    </svg>
+                  </div>
+                  <div class="text-[13px] font-medium text-[#0e0f0c] mt-0.5">4.20 EUR</div>
+                </div>
+                <div>
+                  <div class="text-[12px] text-[#5d6159]">Should arrive</div>
+                  <div class="text-[13px] font-medium text-[#0e0f0c] mt-0.5">In seconds</div>
+                </div>
+              </div>
+
+              <!-- Send Button -->
+              <button onclick="openFeatureModal('send-money')" class="w-full bg-[#9fe870] hover:bg-[#8ee05a] text-[#163300] font-bold text-[14.5px] py-3.5 rounded-full transition">
+                Send
+              </button>
+            </div>
+          </div>
+
+          <!-- Get exchange rate updates bar -->
+          <div onclick="openFeatureModal('rate-alerts')" class="mt-4 bg-[#f2f4f1] hover:bg-[#e8ebe6] rounded-[14px] p-4 flex items-center justify-between cursor-pointer transition">
+            <div class="flex items-center gap-3.5">
+              <div class="w-10 h-10 rounded-full bg-[#e2e5e0] flex items-center justify-center">
+                <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 00-5-5.9V4a1 1 0 10-2 0v1.1A6 6 0 006 11v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                </svg>
+              </div>
+              <span class="text-[14px] font-bold text-[#0e0f0c]">Get exchange rate updates</span>
+            </div>
+            <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </div>
+
+          <!-- Your money, protected Footer -->
+          <div class="text-center pt-10 pb-4">
+            <div class="inline-flex items-center gap-2 text-[15px] font-bold text-[#163300] mb-1.5">
+              <svg class="w-4 h-4 text-[#163300]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 4v5c0 5.25-3.5 9.75-8 11-4.5-1.25-8-5.75-8-11V7l8-4z"/>
+              </svg>
+              <span>Your money, protected</span>
+            </div>
+            <p class="text-[13px] text-[#5d6159] mb-4">
+              We promise to protect every penny with cutting-edge tech and anytime customer support.
+            </p>
+            <button onclick="openFeatureModal('security-protection')" class="btn-wise-neutral text-[13px] py-1.5 px-4">Learn more</button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- VIEW 2: FULL TRANSACTIONS VIEW                                        -->
+      <!-- ===================================================================== -->
+      <section id="view-transactions" class="hidden">
+        <h1 class="text-[32px] font-extrabold text-[#0e0f0c] tracking-tight mb-5">Transactions</h1>
+
+        <!-- Search & Filter Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-7">
+          <div class="flex items-center gap-2.5 flex-1">
+            <div class="relative w-full max-w-[360px]">
+              <svg class="w-4 h-4 text-[#5d6159] absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/>
+              </svg>
+              <input
+                id="tx-search-input"
+                type="text"
+                placeholder="Search"
+                oninput="filterTransactions()"
+                class="w-full pl-10 pr-4 py-1.5 rounded-full border border-[#868b82] text-[14px] text-[#0e0f0c] placeholder-[#5d6159] focus:outline-none focus:border-[#163300]"
+              />
+            </div>
+
+            <button onclick="openFeatureModal('tx-filters')" class="btn-wise-primary py-1.5 px-4 text-[13.5px]">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2" fill="#9fe870"/><circle cx="15" cy="16" r="2" fill="#9fe870"/>
+              </svg>
+              <span>Filters</span>
+            </button>
+
+            <button onclick="exportTransactionsCSV()" class="btn-wise-primary py-1.5 px-4 text-[13.5px]">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/>
+              </svg>
+              <span>Export</span>
+            </button>
+          </div>
+
+          <button onclick="openFeatureModal('statements')" class="btn-wise-neutral py-1.5 px-4 text-[13.5px]">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 3h7l5 5v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M14 3v5h5"/>
+            </svg>
+            <span>Statements and reports</span>
+          </button>
+        </div>
+
+        <!-- Transactions Table Frame -->
+        <div class="bg-[#f2f4f1] rounded-[18px] p-2">
+          <!-- Table Header -->
+          <div class="grid grid-cols-[145px_1fr_110px_140px_28px] items-center px-5 py-3 text-[13px] font-bold text-[#163300]">
+            <div>Date</div>
+            <div>Details</div>
+            <div class="text-center">Attachment</div>
+            <div class="text-right">Amount</div>
+            <div></div>
+          </div>
+
+          <!-- White Inner Table Container -->
+          <div id="transactions-list-container" class="bg-white rounded-[12px] py-1 divide-y divide-[#eff1ee]">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- VIEW 3: CARDS VIEW (With Your Cards, Team Cards, Order Flow & Detail) -->
+      <!-- ===================================================================== -->
+      <section id="view-cards" class="hidden">
+        
+        <!-- SUBVIEW A: MAIN CARDS LIST (Your cards / Team cards) -->
+        <div id="cards-main-subview">
+          <div class="flex items-center justify-between mb-7">
+            <h1 class="text-[32px] font-extrabold text-[#0e0f0c] tracking-tight">Cards</h1>
+            <button onclick="openFeatureModal('travel-hub')" class="border border-[#d5d9d2] hover:bg-[#f2f4f1] rounded-full px-4 py-2 text-[13.5px] font-semibold text-[#163300] inline-flex items-center gap-2 transition">
+              <span class="w-5 h-5 rounded-full bg-[#e6eadf] flex items-center justify-center">
+                <svg class="w-3.5 h-3.5 text-[#163300]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <rect x="6" y="4" width="12" height="13" rx="2"/><path d="M6 12h12M9 17l-2 3m8-3l2 3"/>
+                </svg>
+              </span>
+              <span>Travel hub</span>
+            </button>
+          </div>
+
+          <!-- Tabs: Your cards / Team cards -->
+          <div class="border-b border-[#e6e8e5] flex items-center gap-8 mb-6">
+            <button id="tab-btn-your-cards" onclick="switchCardsTab('your')" class="pb-3 border-b-2 border-[#163300] text-[14px] font-semibold text-[#0e0f0c] transition">
+              Your cards
+            </button>
+            <button id="tab-btn-team-cards" onclick="switchCardsTab('team')" class="pb-3 border-b-2 border-transparent text-[14px] font-medium text-[#5d6159] hover:text-[#0e0f0c] transition">
+              Team cards
+            </button>
+          </div>
+
+          <!-- TAB CONTENT 1: YOUR CARDS -->
+          <div id="cards-tab-your">
+            <!-- Action Options -->
+            <div class="space-y-2 mb-10">
+              <!-- Order a new card -->
+              <div onclick="openOrderCardModal()" class="flex items-center justify-between py-3.5 px-3 rounded-2xl hover:bg-[#f2f4f1] cursor-pointer transition">
+                <div class="flex items-center gap-4">
+                  <div class="w-11 h-11 rounded-full border border-[#e2e5e0] flex items-center justify-center text-[#0e0f0c]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-[15px] font-bold text-[#0e0f0c]">Order a new card</div>
+                    <div class="text-[13.5px] text-[#5d6159]">Get another card for this account.</div>
+                  </div>
+                </div>
+                <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              </div>
+
+              <!-- Your spending limits -->
+              <div onclick="openSpendingLimitsModal()" class="flex items-center justify-between py-3.5 px-3 rounded-2xl hover:bg-[#f2f4f1] cursor-pointer transition">
+                <div class="flex items-center gap-4">
+                  <div class="w-11 h-11 rounded-full border border-[#e2e5e0] flex items-center justify-center text-[#0e0f0c]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 15a2 2 0 100-4 2 2 0 000 4zm0 0v-3m7.07-2.07a8 8 0 10-14.14 0"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-[15px] font-bold text-[#0e0f0c]">Your spending limits</div>
+                    <div class="text-[13.5px] text-[#5d6159]">See how much you can spend and withdraw overall, and on each card.</div>
+                  </div>
+                </div>
+                <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              </div>
+            </div>
+
+            <!-- Active Cards List -->
+            <div id="your-cards-list" class="space-y-3">
+              <!-- Populated by renderCardsList() -->
+            </div>
+          </div>
+
+          <!-- TAB CONTENT 2: TEAM CARDS -->
+          <div id="cards-tab-team" class="hidden space-y-7">
+            <!-- Top summary + actions -->
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div class="relative flex-1 max-w-[340px]">
+                <svg class="w-4 h-4 text-[#5d6159] absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/>
+                </svg>
+                <input
+                  id="team-card-search"
+                  type="text"
+                  placeholder="Search by cardholder or last 4 digits"
+                  oninput="renderTeamCardsList()"
+                  class="w-full pl-10 pr-4 py-1.5 rounded-full border border-[#868b82] text-[13.5px] text-[#0e0f0c] placeholder-[#5d6159] focus:outline-none focus:border-[#163300]"
+                />
+              </div>
+
+              <div class="flex items-center gap-2.5">
+                <button onclick="openSpendingLimitsModal()" class="btn-wise-neutral py-2 px-4 text-[13.5px]">
+                  Team spending limits
+                </button>
+                <button onclick="openOrderCardModal()" class="btn-wise-primary py-2 px-4 text-[13.5px]">
+                  + Order team card
+                </button>
+              </div>
+            </div>
+
+            <!-- Team Cardholders Breakdown -->
+            <div id="team-cards-list-container" class="space-y-6">
+              <!-- Populated by renderTeamCardsList() -->
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBVIEW B: INDIVIDUAL CARD DETAILS VIEW (Opens when clicking 3973 or 3882) -->
+        <div id="card-detail-subview" class="hidden">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <div id="detail-card-badge" class="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-[#007a27] bg-[#e2f6d5] px-3 py-0.5 rounded-full mb-2">
+                <span class="w-2 h-2 rounded-full bg-[#007a27]"></span>
+                <span id="detail-card-status-text">Ready to use</span>
+              </div>
+              <h1 id="detail-card-title" class="text-[30px] font-extrabold text-[#0e0f0c] tracking-tight">Digital card •••• 3973</h1>
+              <p id="detail-card-subtitle" class="text-[14px] text-[#5d6159]">Mahboubeh Mehrafshan • Current account</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <!-- Left Column: Interactive Visual Wise Card + Quick Actions -->
+            <div class="lg:col-span-6 bg-[#f2f4f1] rounded-[22px] p-7 flex flex-col items-center">
+              
+              <!-- Visual Wise Card -->
+              <div id="detail-visual-card" class="w-full max-w-[360px] h-[222px] rounded-[18px] p-6 flex flex-col justify-between text-white shadow-lg relative overflow-hidden transition-all duration-300 bg-gradient-to-br from-[#164e1b] via-[#2c8c30] to-[#80e258]">
+                <!-- Frozen Overlay -->
+                <div id="detail-card-frozen-overlay" class="hidden absolute inset-0 bg-[#0e0f0c]/70 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center text-white">
+                  <svg class="w-9 h-9 text-[#9fe870] mb-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20m8.66-15L3.34 17m0-10l17.32 10"/>
+                  </svg>
+                  <span class="text-[14px] font-bold tracking-wide">Card is frozen</span>
+                </div>
+
+                <!-- Top Row of Card -->
+                <div class="flex items-center justify-between z-10">
+                  <span id="detail-card-label-chip" class="text-[12px] font-semibold tracking-wider uppercase bg-black/20 backdrop-blur-sm px-2.5 py-1 rounded-full">
+                    Wise Business
+                  </span>
+                  <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9.6 2L1 12.8h10l-2.1 5.9L20.1 7.7H9.8L11.8 2H9.6z"/>
+                  </svg>
+                </div>
+
+                <!-- Middle Card Number & Expiry/CVV -->
+                <div class="my-auto pt-3 z-10">
+                  <div class="flex items-center justify-between">
+                    <div id="detail-card-number-display" class="text-[19px] font-mono font-bold tracking-widest drop-shadow-sm">
+                      •••• •••• •••• 3973
+                    </div>
+                    <button onclick="copyCardNumber()" id="copy-card-btn" class="hidden text-[11.5px] bg-white/20 hover:bg-white/30 px-2.5 py-1 rounded-full font-semibold transition">
+                      Copy
+                    </button>
+                  </div>
+
+                  <div class="flex items-center gap-6 mt-3 text-[13px] font-mono">
+                    <div>
+                      <span class="text-white/75 text-[10px] uppercase block">Expiry date</span>
+                      <span id="detail-card-expiry" class="font-bold">••/••</span>
+                    </div>
+                    <div>
+                      <span class="text-white/75 text-[10px] uppercase block">CVV</span>
+                      <span id="detail-card-cvv" class="font-bold">•••</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bottom Row: Holder Name + Visa Logo -->
+                <div class="flex items-end justify-between z-10">
+                  <div id="detail-card-holder-display" class="text-[13px] font-semibold tracking-wider uppercase">
+                    MAHBOUBEH MEHRAFSHAN
+                  </div>
+                  <div class="text-[18px] font-black italic tracking-tighter">VISA</div>
+                </div>
+              </div>
+
+              <!-- 3 Circular Quick Action Buttons below the card -->
+              <div class="flex items-center justify-center gap-8 mt-7 w-full">
+                <!-- Show details -->
+                <button onclick="toggleRevealCardDetails()" class="flex flex-col items-center gap-2 group">
+                  <div id="btn-reveal-circle" class="w-12 h-12 rounded-full bg-[#9fe870] group-hover:bg-[#8ee05a] text-[#163300] flex items-center justify-center transition shadow-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                  </div>
+                  <span id="btn-reveal-label" class="text-[13px] font-semibold text-[#0e0f0c]">Show details</span>
+                </button>
+
+                <!-- Freeze card -->
+                <button onclick="toggleFreezeActiveCard()" class="flex flex-col items-center gap-2 group">
+                  <div id="btn-freeze-circle" class="w-12 h-12 rounded-full bg-[#e2e5e0] group-hover:bg-[#d5d9d2] text-[#0e0f0c] flex items-center justify-center transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20m8.66-15L3.34 17m0-10l17.32 10"/>
+                    </svg>
+                  </div>
+                  <span id="btn-freeze-label" class="text-[13px] font-semibold text-[#0e0f0c]">Freeze card</span>
+                </button>
+
+                <!-- Limits -->
+                <button onclick="openSpendingLimitsModal()" class="flex flex-col items-center gap-2 group">
+                  <div class="w-12 h-12 rounded-full bg-[#e2e5e0] group-hover:bg-[#d5d9d2] text-[#0e0f0c] flex items-center justify-center transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 15a2 2 0 100-4 2 2 0 000 4zm0 0v-3m7.07-2.07a8 8 0 10-14.14 0"/>
+                    </svg>
+                  </div>
+                  <span class="text-[13px] font-semibold text-[#0e0f0c]">Spending limits</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Right Column: Card Settings & Recent Card Activity -->
+            <div class="lg:col-span-6 space-y-6">
+              <div class="border border-[#e6e8e5] rounded-[18px] p-5 space-y-4">
+                <h3 class="text-[16px] font-bold text-[#0e0f0c]">Card details & settings</h3>
+
+                <div class="flex items-center justify-between py-2 border-b border-[#eff1ee] text-[14px]">
+                  <span class="text-[#5d6159]">Cardholder</span>
+                  <span id="detail-meta-holder" class="font-semibold text-[#0e0f0c]">Mahboubeh Mehrafshan</span>
+                </div>
+
+                <div class="flex items-center justify-between py-2 border-b border-[#eff1ee] text-[14px]">
+                  <span class="text-[#5d6159]">Card type</span>
+                  <span id="detail-meta-type" class="font-semibold text-[#0e0f0c]">Wise Digital Visa Debit</span>
+                </div>
+
+                <div class="flex items-center justify-between py-2 border-b border-[#eff1ee] text-[14px]">
+                  <span class="text-[#5d6159]">Linked balance</span>
+                  <span class="font-semibold text-[#0e0f0c]">Current account (€9,080.00)</span>
+                </div>
+
+                <div class="flex items-center justify-between py-2 text-[14px]">
+                  <span class="text-[#5d6159]">Monthly spending limit</span>
+                  <span id="detail-meta-limit" class="font-semibold text-[#0e0f0c]">15,000.00 EUR / month</span>
+                </div>
+              </div>
+
+              <!-- Recent transactions with this card -->
+              <div class="border border-[#e6e8e5] rounded-[18px] p-5">
+                <div class="flex items-center justify-between mb-3">
+                  <h3 class="text-[16px] font-bold text-[#0e0f0c]">Recent card spend</h3>
+                  <button onclick="switchView('transactions')" class="text-[13px] font-semibold text-[#163300] underline">See all</button>
+                </div>
+                <div id="detail-card-tx-list" class="space-y-3">
+                  <!-- Populated dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- VIEW 4: PAYMENTS VIEW (100% CLICKABLE & INTERACTIVE)                  -->
+      <!-- ===================================================================== -->
+      <section id="view-payments" class="hidden space-y-10">
+        <div>
+          <h1 class="text-[32px] font-extrabold text-[#0e0f0c] tracking-tight mb-4">Payments</h1>
+          <div class="flex items-center gap-2.5">
+            <button onclick="openFeatureModal('send-money')" class="btn-wise-primary">Send</button>
+            <button onclick="openFeatureModal('get-paid')" class="btn-wise-secondary">
+              <span>Get paid</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Outgoing -->
+        <div>
+          <h2 class="text-[19px] font-bold text-[#0e0f0c] mb-4">Outgoing</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div onclick="openFeatureModal('direct-debits')" class="solid-card">
+              <div class="flex items-center gap-4">
+                <div class="w-11 h-11 rounded-full bg-[#e2e5e0] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 12a8 8 0 0114.3-4.9M20 12a8 8 0 01-14.3 4.9M18 3v4h-4M6 21v-4h4"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Direct Debits</div>
+                  <div class="text-[13px] text-[#5d6159]">1 active</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <div onclick="openFeatureModal('pay-invoices')" class="dashed-card">
+              <div class="flex items-center gap-4">
+                <div class="relative w-11 h-11 rounded-full bg-[#f2f4f1] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 19V6m0 0l-5 5m5-5l5 5M5 4h14"/>
+                  </svg>
+                  <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#9fe870] text-[#163300] flex items-center justify-center text-[12px] font-bold">+</span>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Pay Invoices</div>
+                  <div class="text-[13px] text-[#5d6159] leading-snug">Upload or email invoices, or sync with accounting software.</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <div onclick="openFeatureModal('scheduled-transfers')" class="dashed-card">
+              <div class="flex items-center gap-4">
+                <div class="relative w-11 h-11 rounded-full bg-[#f2f4f1] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+                  </svg>
+                  <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#9fe870] text-[#163300] flex items-center justify-center text-[12px] font-bold">+</span>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Scheduled transfers</div>
+                  <div class="text-[13px] text-[#5d6159]">Set up a transfer to send at a later date.</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <div onclick="openFeatureModal('forward-conversions')" class="dashed-card">
+              <div class="flex items-center gap-4">
+                <div class="relative w-11 h-11 rounded-full bg-[#f2f4f1] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 3"/>
+                  </svg>
+                  <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#9fe870] text-[#163300] flex items-center justify-center text-[12px] font-bold">+</span>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Forward conversions</div>
+                  <div class="text-[13px] text-[#5d6159]">Register interest in forward conversions.</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <div onclick="openFeatureModal('recurring-card')" class="dashed-card">
+              <div class="flex items-center gap-4">
+                <div class="relative w-11 h-11 rounded-full bg-[#f2f4f1] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                  </svg>
+                  <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#9fe870] text-[#163300] flex items-center justify-center text-[12px] font-bold">+</span>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Recurring card payments</div>
+                  <div class="text-[13px] text-[#5d6159]">Manage your repeated card transactions.</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <div onclick="openFeatureModal('batch-payments')" class="dashed-card">
+              <div class="flex items-center gap-4">
+                <div class="relative w-11 h-11 rounded-full bg-[#f2f4f1] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="7" r="2.5"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/>
+                  </svg>
+                  <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#9fe870] text-[#163300] flex items-center justify-center text-[12px] font-bold">+</span>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Batch payments</div>
+                  <div class="text-[13px] text-[#5d6159]">Send multiple transfers with one payment file.</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Incoming -->
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-[19px] font-bold text-[#0e0f0c]">Incoming</h2>
+            <button onclick="openFeatureModal('quick-pay')" class="btn-wise-secondary text-[12.5px] py-1 px-3.5">Looking for Quick Pay?</button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div onclick="openFeatureModal('qr-codes')" class="solid-card">
+              <div class="flex items-center gap-4">
+                <div class="w-11 h-11 rounded-full bg-[#e2e5e0] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h6v6h-6z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">QR codes</div>
+                  <div class="text-[13px] text-[#5d6159]">Let your customers scan and pay.</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <div onclick="openFeatureModal('create-invoices')" class="dashed-card">
+              <div class="flex items-center gap-4">
+                <div class="relative w-11 h-11 rounded-full bg-[#f2f4f1] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 3h7l5 5v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M14 3v5h5"/>
+                  </svg>
+                  <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#9fe870] text-[#163300] flex items-center justify-center text-[12px] font-bold">+</span>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Create invoices</div>
+                  <div class="text-[13px] text-[#5d6159]">Send invoices to request payments.</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <div onclick="openFeatureModal('payment-links')" class="dashed-card">
+              <div class="flex items-center gap-4">
+                <div class="relative w-11 h-11 rounded-full bg-[#f2f4f1] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+                  </svg>
+                  <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#9fe870] text-[#163300] flex items-center justify-center text-[12px] font-bold">+</span>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Payment links</div>
+                  <div class="text-[13px] text-[#5d6159]">Request payments from anyone, anywhere.</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <div onclick="openFeatureModal('payment-gateway')" class="dashed-card">
+              <div class="flex items-center gap-4">
+                <div class="relative w-11 h-11 rounded-full bg-[#f2f4f1] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                  </svg>
+                  <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#9fe870] text-[#163300] flex items-center justify-center text-[12px] font-bold">+</span>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Payment gateway</div>
+                  <div class="text-[13px] text-[#5d6159]">Register interest in ecommerce card payments.</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment tools -->
+        <div>
+          <h2 class="text-[19px] font-bold text-[#0e0f0c] mb-4">Payment tools</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div onclick="openFeatureModal('wisetag')" class="solid-card">
+              <div class="flex items-center gap-4">
+                <div class="relative w-11 h-11 rounded-full bg-[#e2e5e0] flex items-center justify-center font-bold text-[15px] text-[#0e0f0c] shrink-0">
+                  ML
+                  <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#9fe870] text-[#163300] flex items-center justify-center text-[9px] font-black">7</span>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Your Wisetag</div>
+                  <div class="text-[13px] text-[#5d6159]">@mixaltoltd</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <div onclick="openFeatureModal('auto-conversions')" class="dashed-card">
+              <div class="flex items-center gap-4">
+                <div class="relative w-11 h-11 rounded-full bg-[#f2f4f1] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l5-5 4 4 7-7m0 0h-5m5 0v5"/>
+                  </svg>
+                  <span class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#9fe870] text-[#163300] flex items-center justify-center text-[12px] font-bold">+</span>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Auto Conversions</div>
+                  <div class="text-[13px] text-[#5d6159] leading-snug">Convert money between currencies automatically at your chosen rate.</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account details (Each currency opens complete bank details modal) -->
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-[19px] font-bold text-[#0e0f0c]">Account details</h2>
+            <button onclick="openAccountDetailsModal('EUR')" class="btn-wise-secondary text-[12.5px] py-1 px-3.5">See all</button>
+          </div>
+
+          <div class="space-y-3">
+            <!-- Euro -->
+            <div onclick="openAccountDetailsModal('EUR')" class="solid-card">
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full bg-[#003399] flex items-center justify-center shrink-0">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="#FFCC00">
+                    <circle cx="12" cy="4" r="1.2"/><circle cx="12" cy="20" r="1.2"/><circle cx="4" cy="12" r="1.2"/><circle cx="20" cy="12" r="1.2"/>
+                    <circle cx="6.3" cy="6.3" r="1.2"/><circle cx="17.7" cy="6.3" r="1.2"/><circle cx="6.3" cy="17.7" r="1.2"/><circle cx="17.7" cy="17.7" r="1.2"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Euro</div>
+                  <div class="text-[13px] text-[#5d6159]">IBAN ending •• 76415</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <!-- British Pound -->
+            <div onclick="openAccountDetailsModal('GBP')" class="solid-card">
+              <div class="flex items-center gap-4">
+                <svg class="w-10 h-10 rounded-full shrink-0" viewBox="0 0 24 24">
+                  <clipPath id="gbpClipAcc"><circle cx="12" cy="12" r="12"/></clipPath>
+                  <g clip-path="url(#gbpClipAcc)">
+                    <rect width="24" height="24" fill="#012169"/>
+                    <path d="M0 0l24 24M24 0L0 24" stroke="#fff" stroke-width="4"/>
+                    <path d="M0 0l24 24M24 0L0 24" stroke="#C8102E" stroke-width="2"/>
+                    <path d="M12 0v24M0 12h24" stroke="#fff" stroke-width="6"/>
+                    <path d="M12 0v24M0 12h24" stroke="#C8102E" stroke-width="3.5"/>
+                  </g>
+                </svg>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">British Pound</div>
+                  <div class="text-[13px] text-[#5d6159]">Account number ending •• 29632</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <!-- Canadian Dollar -->
+            <div onclick="openAccountDetailsModal('CAD')" class="solid-card">
+              <div class="flex items-center gap-4">
+                <svg class="w-10 h-10 rounded-full shrink-0" viewBox="0 0 24 24">
+                  <clipPath id="cadClipAcc"><circle cx="12" cy="12" r="12"/></clipPath>
+                  <g clip-path="url(#cadClipAcc)">
+                    <rect x="0" y="0" width="6" height="24" fill="#ff0000"/>
+                    <rect x="6" y="0" width="12" height="24" fill="#ffffff"/>
+                    <rect x="18" y="0" width="6" height="24" fill="#ff0000"/>
+                    <path d="M12 6l1.5 3h2l-1.5 2 1 2.5-3-1.5-3 1.5 1-2.5-1.5-2h2z" fill="#ff0000"/>
+                  </g>
+                </svg>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Canadian Dollar</div>
+                  <div class="text-[13px] text-[#5d6159]">Account number ending •• 03459</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+
+          <div class="text-center pt-10 pb-4">
+            <p class="text-[13px] text-[#5d6159] mb-1">We've made some changes to this area of the app.</p>
+            <button onclick="openFeatureModal('feedback')" class="text-[13.5px] font-bold text-[#163300] underline">Give us feedback</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- VIEW 5: TEAM VIEW (Fully Interactive)                                 -->
+      <!-- ===================================================================== -->
+      <section id="view-team" class="hidden">
+        <h1 class="text-[32px] font-extrabold text-[#0e0f0c] tracking-tight mb-5">Team</h1>
+
+        <!-- Top Actions -->
+        <div class="flex flex-wrap items-center gap-6 mb-9">
+          <button onclick="openFeatureModal('add-team-member')" class="btn-wise-primary py-2 px-4 text-[13.5px]">Add team member</button>
+          <button onclick="openFeatureModal('payment-approvals')" class="text-[13.5px] font-bold text-[#163300] underline">Payment approvals</button>
+          <button onclick="openFeatureModal('expense-reminders')" class="text-[13.5px] font-bold text-[#163300] underline">Expense reminders</button>
+        </div>
+
+        <!-- Active members count -->
+        <div id="team-active-count-header" class="border-b border-[#e6e8e5] pb-2.5 mb-3 text-[13px] text-[#5d6159] font-medium">
+          Active members (2)
+        </div>
+
+        <div id="team-members-list-container" class="space-y-2 mb-14 divide-y divide-[#eff1ee]">
+          <!-- Populated dynamically via renderTeamMembersView() -->
+        </div>
+
+        <!-- Center Puzzle Illustration & Prompt -->
+        <div class="text-center py-6">
+          <div class="w-64 h-60 mx-auto mb-6 flex items-center justify-center">
+            <svg viewBox="0 0 240 220" class="w-full h-full drop-shadow-sm">
+              <defs>
+                <linearGradient id="puzYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#f3d417"/>
+                  <stop offset="60%" stop-color="#9cc926"/>
+                  <stop offset="100%" stop-color="#4e9a18"/>
+                </linearGradient>
+                <linearGradient id="puzGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#9fe870"/>
+                  <stop offset="50%" stop-color="#4ba619"/>
+                  <stop offset="100%" stop-color="#185a06"/>
+                </linearGradient>
+              </defs>
+              <path d="M55,55 h35 a12,12 0 1,1 0,24 h-35 v35 a12,12 0 1,1 -24,0 v-35 h-15 v-24 h15 v-15 a12,12 0 1,1 24,0 z" fill="url(#puzYellow)" stroke="#2c5e0f" stroke-width="1"/>
+              <g transform="rotate(12 160 65)">
+                <path d="M130,30 h55 v22 a12,12 0 1,1 0,24 v22 h-55 v-22 a12,12 0 1,0 0,-24 z" fill="url(#puzGreen)" stroke="#163300" stroke-width="1"/>
+              </g>
+              <path d="M40,115 h55 v20 a12,12 0 1,1 0,24 v20 h-55 v-64 z" fill="url(#puzYellow)" stroke="#2c5e0f" stroke-width="1"/>
+              <path d="M98,115 h62 v64 h-22 a12,12 0 1,1 -24,0 h-16 v-64 z" fill="url(#puzGreen)" stroke="#163300" stroke-width="1"/>
+            </svg>
+          </div>
+          <h2 class="text-[24px] font-extrabold text-[#0e0f0c] mb-3">Want to share tasks with your team?</h2>
+          <button onclick="openFeatureModal('add-team-member')" class="btn-wise-secondary px-5 py-2">Invite a team member</button>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- VIEW 6: TOTAL BALANCE / RETURNS BREAKDOWN VIEW (9,080.00 EUR)         -->
+      <!-- ===================================================================== -->
+      <section id="view-balance" class="hidden space-y-8">
+        <div>
+          <div onclick="openFeatureModal('balance-info')" class="inline-flex items-center gap-1.5 text-[14px] text-[#5d6159] mb-1 cursor-pointer hover:text-[#0e0f0c]">
+            <span>Total balance</span>
+            <svg class="w-4 h-4 text-[#163300]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 014.5 1.5c0 1.5-2 2-2 3.5m0 3h.01"/>
+            </svg>
+          </div>
+          <h1 class="text-[36px] font-extrabold text-[#0e0f0c] tracking-tight">9,080.00 EUR</h1>
+        </div>
+
+        <!-- Cash / Stocks / Interest rows -->
+        <div class="space-y-4">
+          <!-- Cash -->
+          <div onclick="openAccountDetailsModal('EUR')" class="flex items-center justify-between py-2.5 px-2 rounded-2xl hover:bg-[#f2f4f1] cursor-pointer transition">
+            <div class="flex items-center gap-4">
+              <div class="w-11 h-11 rounded-full bg-[#f2f4f1] flex items-center justify-center">
+                <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/>
+                </svg>
+              </div>
+              <div>
+                <div class="text-[14.5px] font-bold text-[#0e0f0c]">Cash</div>
+                <div class="text-[13px] text-[#5d6159]">9,080.00 EUR</div>
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </div>
+
+          <!-- Stocks -->
+          <div class="flex items-center justify-between py-2.5 px-2">
+            <div class="flex items-center gap-4">
+              <div class="w-11 h-11 rounded-full bg-[#163300] flex items-center justify-center">
+                <svg class="w-5 h-5 text-[#9fe870]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l5-5 4 4 7-7m0 0h-5m5 0v5"/>
+                </svg>
+              </div>
+              <div class="text-[14.5px] font-semibold text-[#0e0f0c]">Stocks</div>
+            </div>
+            <button onclick="openFeatureModal('stocks-jar')" class="btn-wise-neutral text-[13px] py-1.5 px-4">Learn more</button>
+          </div>
+
+          <!-- Interest -->
+          <div class="flex items-center justify-between py-2.5 px-2">
+            <div class="flex items-center gap-4">
+              <div class="w-11 h-11 rounded-full bg-[#9fe870] flex items-center justify-center">
+                <svg class="w-5 h-5 text-[#163300]" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+                  <circle cx="10" cy="10" r="5"/><circle cx="15" cy="15" r="4.5" fill="#9fe870"/>
+                  <path stroke-linecap="round" d="M15 13v4m-2-2h4"/>
+                </svg>
+              </div>
+              <div class="text-[14.5px] font-semibold text-[#0e0f0c]">Interest</div>
+            </div>
+            <button onclick="openFeatureModal('interest-jar')" class="btn-wise-neutral text-[13px] py-1.5 px-4">Learn more</button>
+          </div>
+        </div>
+
+        <!-- Total returns Card -->
+        <div>
+          <h2 class="text-[19px] font-bold text-[#0e0f0c] mb-4">Total returns</h2>
+          <div class="bg-[#f2f4f1] rounded-[16px] py-6 px-8 grid grid-cols-2 text-center">
+            <div>
+              <div class="text-[13px] text-[#5d6159] mb-1">Interest</div>
+              <div class="text-[19px] font-extrabold text-[#0e0f0c]">0.00 EUR</div>
+            </div>
+            <div>
+              <div class="text-[13px] text-[#5d6159] mb-1">Stocks</div>
+              <div class="text-[19px] font-extrabold text-[#0e0f0c]">0.00 EUR</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback Footer -->
+        <div class="text-center pt-6">
+          <p class="text-[13px] text-[#5d6159] mb-1">What do you think about this experience?</p>
+          <button onclick="openFeatureModal('feedback')" class="text-[13.5px] font-bold text-[#163300] underline">Give us feedback</button>
+        </div>
+      </section>
+
+      <!-- ===================================================================== -->
+      <!-- VIEW 7: DEDICATED 'ML Mixalto Ltd' BUSINESS ACCOUNT & SETTINGS HUB    -->
+      <!-- ===================================================================== -->
+      <section id="view-profile" class="hidden space-y-9">
+        <!-- Top Profile Banner -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#e6e8e5]">
+          <div class="flex items-center gap-5">
+            <div class="relative w-16 h-16 rounded-full bg-[#f2f4f1] border border-[#e2e5e0] flex items-center justify-center font-extrabold text-[22px] text-[#0e0f0c]">
+              ML
+              <span class="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-[#9fe870] text-[#163300] flex items-center justify-center text-[10px] font-black border-2 border-white">✓</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-2.5">
+                <h1 class="text-[28px] font-extrabold text-[#0e0f0c] tracking-tight">Mixalto Ltd</h1>
+                <span class="bg-[#e2f6d5] text-[#007a27] text-[12px] font-bold px-3 py-0.5 rounded-full">Verified Business</span>
+              </div>
+              <p class="text-[13.5px] text-[#5d6159] mt-0.5">
+                Membership number: <span class="font-semibold text-[#0e0f0c]">P48291044</span> • Wisetag: <span class="font-semibold text-[#163300]">@mixaltoltd</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <button onclick="openFeatureModal('wisetag')" class="btn-wise-secondary py-2 px-4 text-[13.5px]">Your Wisetag</button>
+            <button onclick="openFeatureModal('statements')" class="btn-wise-neutral py-2 px-4 text-[13.5px]">Statements & reports</button>
+          </div>
+        </div>
+
+        <!-- Account Switcher (Business vs Personal) -->
+        <div>
+          <h2 class="text-[15px] font-bold text-[#5d6159] uppercase tracking-wider mb-3">Your accounts</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="border-2 border-[#163300] bg-[#f2f4f1] rounded-[16px] p-4 flex items-center justify-between cursor-pointer">
+              <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-full bg-[#163300] text-[#9fe870] flex items-center justify-center font-bold text-[14px]">ML</div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Mixalto Ltd</div>
+                  <div class="text-[12.5px] text-[#5d6159]">Business account • €9,080.00</div>
+                </div>
+              </div>
+              <span class="bg-[#9fe870] text-[#163300] text-[11.5px] font-bold px-2.5 py-0.5 rounded-full">Active</span>
+            </div>
+
+            <div onclick="openFeatureModal('personal-account-switch')" class="border border-[#e6e8e5] hover:bg-[#f2f4f1] rounded-[16px] p-4 flex items-center justify-between cursor-pointer transition">
+              <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-full bg-[#e2e5e0] text-[#0e0f0c] flex items-center justify-center font-bold text-[14px]">MM</div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Mahboubeh Mehrafshan</div>
+                  <div class="text-[12.5px] text-[#5d6159]">Personal account • mahbobmhrafshan@gmail.com</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings & Features Grid (Real Wise Business Options) -->
+        <div>
+          <h2 class="text-[19px] font-bold text-[#0e0f0c] mb-4">Business settings & tools</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <!-- Business Profile Details -->
+            <div onclick="openFeatureModal('business-details')" class="solid-card">
+              <div class="flex items-center gap-4">
+                <div class="w-11 h-11 rounded-full bg-[#e2e5e0] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l8-4v18m6 0V11l-6-4"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Business profile</div>
+                  <div class="text-[13px] text-[#5d6159]">Registration number, address & verification status</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <!-- Personal Details (Mahboubeh Mehrafshan) -->
+            <div onclick="openFeatureModal('personal-details')" class="solid-card">
+              <div class="flex items-center gap-4">
+                <div class="w-11 h-11 rounded-full bg-[#e2e5e0] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Your personal profile</div>
+                  <div class="text-[13px] text-[#5d6159]">MAHBOUBEH MEHRAFSHAN • Account owner</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <!-- Security and Privacy -->
+            <div onclick="openFeatureModal('security-settings')" class="solid-card">
+              <div class="flex items-center gap-4">
+                <div class="w-11 h-11 rounded-full bg-[#e2e5e0] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V7a4 4 0 018 0v4"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Security and privacy</div>
+                  <div class="text-[13px] text-[#5d6159]">2-step verification (Active), passkeys & sessions</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <!-- Accounting & API Integrations -->
+            <div onclick="openFeatureModal('integrations')" class="solid-card">
+              <div class="flex items-center gap-4">
+                <div class="w-11 h-11 rounded-full bg-[#e2e5e0] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Integrations & API tokens</div>
+                  <div class="text-[13px] text-[#5d6159]">Xero, QuickBooks, Stripe, webhooks & API keys</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <!-- Statements & Tax Reports -->
+            <div onclick="openFeatureModal('statements')" class="solid-card">
+              <div class="flex items-center gap-4">
+                <div class="w-11 h-11 rounded-full bg-[#e2e5e0] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 3h7l5 5v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M14 3v5h5"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Statements and reports</div>
+                  <div class="text-[13px] text-[#5d6159]">Download official PDF/CSV statements & audit letters</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+            <!-- Notifications & Preferences -->
+            <div onclick="openFeatureModal('notifications-settings')" class="solid-card">
+              <div class="flex items-center gap-4">
+                <div class="w-11 h-11 rounded-full bg-[#e2e5e0] flex items-center justify-center shrink-0">
+                  <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 00-5-5.9V4a1 1 0 10-2 0v1.1A6 6 0 006 11v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-[14.5px] font-bold text-[#0e0f0c]">Notifications & language</div>
+                  <div class="text-[13px] text-[#5d6159]">Email alerts, push notifications & receipt rules</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Bottom Actions: Help Center & Log out -->
+        <div class="pt-4 border-t border-[#e6e8e5] flex items-center justify-between">
+          <button onclick="openFeatureModal('help-center')" class="btn-wise-neutral py-2 px-5">Wise Help Centre</button>
+          <button onclick="showToast('Session locked safely — Mixalto Ltd remains active')" class="text-[14px] font-bold text-[#d92d20] hover:underline">Log out</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==================== MODAL 1: ORDER A NEW CARD ==================== -->
+  <div id="modal-order-card" class="hidden fixed inset-0 bg-black/40 backdrop-blur-[1px] z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-[22px] max-w-[500px] w-full p-7 shadow-2xl relative">
+      <!-- Close -->
+      <button onclick="closeOrderCardModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#f2f4f1] hover:bg-[#e2e5e0] flex items-center justify-center">
+        <svg class="w-4 h-4 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Order a new card</h2>
+      <p class="text-[13.5px] text-[#5d6159] mb-6">Choose a card type and assign it to a team member.</p>
+
+      <!-- Step Form -->
+      <div class="space-y-5">
+        <!-- Card Type Selector -->
+        <div>
+          <label class="block text-[13px] font-bold text-[#0e0f0c] mb-2">Card type</label>
+          <div class="grid grid-cols-2 gap-3">
+            <div id="order-type-digital" onclick="selectOrderCardType('digital')" class="border-2 border-[#163300] bg-[#f2f4f1] rounded-2xl p-3.5 cursor-pointer transition">
+              <div class="flex items-center justify-between mb-2">
+                <div class="w-9 h-6 rounded bg-gradient-to-br from-[#8f7ce0] via-[#a39cf4] to-[#63b3ed] flex items-start justify-end p-1">
+                  <span class="text-[6px] font-black text-white">7</span>
+                </div>
+                <span class="text-[11px] font-bold bg-[#9fe870] text-[#163300] px-2 py-0.5 rounded-full">Free</span>
+              </div>
+              <div class="text-[14px] font-bold text-[#0e0f0c]">Digital card</div>
+              <div class="text-[12px] text-[#5d6159]">Ready to use instantly</div>
+            </div>
+
+            <div id="order-type-physical" onclick="selectOrderCardType('physical')" class="border border-[#d5d9d2] bg-white rounded-2xl p-3.5 cursor-pointer transition">
+              <div class="flex items-center justify-between mb-2">
+                <div class="w-9 h-6 rounded bg-gradient-to-br from-[#1f6322] via-[#34942c] to-[#7bd955] flex items-start justify-end p-1">
+                  <span class="text-[6px] font-black text-white">7</span>
+                </div>
+                <span class="text-[11px] font-semibold bg-[#f2f4f1] text-[#0e0f0c] px-2 py-0.5 rounded-full">4 EUR</span>
+              </div>
+              <div class="text-[14px] font-bold text-[#0e0f0c]">Physical card</div>
+              <div class="text-[12px] text-[#5d6159]">Arrives in 3–5 days</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cardholder Select -->
+        <div>
+          <label class="block text-[13px] font-bold text-[#0e0f0c] mb-1.5">Team member</label>
+          <select id="order-card-holder" class="w-full rounded-xl border border-[#868b82] px-3.5 py-2.5 text-[14px] text-[#0e0f0c] font-medium focus:outline-none focus:border-[#163300]">
+            <option value="Mahboubeh Mehrafshan">Mahboubeh Mehrafshan (You)</option>
+            <option value="Sahar Leilabadi">Sahar Leilabadi (Admin)</option>
+          </select>
+        </div>
+
+        <!-- Card Label Input -->
+        <div>
+          <label class="block text-[13px] font-bold text-[#0e0f0c] mb-1.5">Card label (optional)</label>
+          <input id="order-card-label" type="text" placeholder="e.g. Meta & TikTok Ads, Travel, Subscriptions" class="w-full rounded-xl border border-[#868b82] px-3.5 py-2.5 text-[14px] text-[#0e0f0c] placeholder-[#5d6159] focus:outline-none focus:border-[#163300]" />
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-2 flex items-center justify-end gap-3">
+          <button onclick="closeOrderCardModal()" class="btn-wise-neutral py-2.5 px-5">Cancel</button>
+          <button onclick="confirmOrderNewCard()" class="btn-wise-primary py-2.5 px-6">Create card instantly</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 2: SPENDING LIMITS ==================== -->
+  <div id="modal-spending-limits" class="hidden fixed inset-0 bg-black/40 backdrop-blur-[1px] z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-[22px] max-w-[460px] w-full p-7 shadow-2xl relative">
+      <button onclick="closeSpendingLimitsModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#f2f4f1] hover:bg-[#e2e5e0] flex items-center justify-center">
+        <svg class="w-4 h-4 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Spending limits</h2>
+      <p class="text-[13.5px] text-[#5d6159] mb-6">Account-wide monthly spending & ATM limits in EUR.</p>
+
+      <div class="space-y-5">
+        <div class="bg-[#f2f4f1] rounded-2xl p-4">
+          <div class="flex justify-between text-[13.5px] font-bold text-[#0e0f0c] mb-1">
+            <span>Monthly card spending</span>
+            <span>3,370.00 / 30,000.00 EUR</span>
+          </div>
+          <div class="w-full h-2 bg-[#dcdfda] rounded-full overflow-hidden my-2">
+            <div class="bg-[#163300] h-full w-[14%] rounded-full"></div>
+          </div>
+          <div class="text-[12px] text-[#5d6159]">26,630.00 EUR remaining this month (resets Nov 1)</div>
+        </div>
+
+        <div class="bg-[#f2f4f1] rounded-2xl p-4">
+          <div class="flex justify-between text-[13.5px] font-bold text-[#0e0f0c] mb-1">
+            <span>Daily ATM withdrawal</span>
+            <span>0.00 / 4,000.00 EUR</span>
+          </div>
+          <div class="w-full h-2 bg-[#dcdfda] rounded-full overflow-hidden my-2">
+            <div class="bg-[#163300] h-full w-[0%] rounded-full"></div>
+          </div>
+          <div class="text-[12px] text-[#5d6159]">4,000.00 EUR remaining today</div>
+        </div>
+
+        <div class="pt-1 flex justify-end">
+          <button onclick="closeSpendingLimitsModal()" class="btn-wise-primary py-2.5 px-6">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 3: UNIVERSAL ACCOUNT DETAILS MODAL ==================== -->
+  <div id="modal-account-details" class="hidden fixed inset-0 bg-black/40 backdrop-blur-[1px] z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-[22px] max-w-[560px] w-full p-7 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAccountDetailsModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#f2f4f1] hover:bg-[#e2e5e0] flex items-center justify-center">
+        <svg class="w-4 h-4 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- Currency Switcher Pills -->
+      <div class="flex items-center gap-2 mb-5 overflow-x-auto no-scrollbar pb-1">
+        <button onclick="openAccountDetailsModal('EUR')" id="acc-tab-EUR" class="px-3.5 py-1.5 rounded-full text-[13px] font-bold bg-[#163300] text-[#9fe870] transition">🇪🇺 EUR</button>
+        <button onclick="openAccountDetailsModal('GBP')" id="acc-tab-GBP" class="px-3.5 py-1.5 rounded-full text-[13px] font-semibold bg-[#f2f4f1] text-[#0e0f0c] hover:bg-[#e2e5e0] transition">🇬🇧 GBP</button>
+        <button onclick="openAccountDetailsModal('CAD')" id="acc-tab-CAD" class="px-3.5 py-1.5 rounded-full text-[13px] font-semibold bg-[#f2f4f1] text-[#0e0f0c] hover:bg-[#e2e5e0] transition">🇨🇦 CAD</button>
+        <button onclick="openAccountDetailsModal('USD')" id="acc-tab-USD" class="px-3.5 py-1.5 rounded-full text-[13px] font-semibold bg-[#f2f4f1] text-[#0e0f0c] hover:bg-[#e2e5e0] transition">🇺🇸 USD</button>
+        <button onclick="openAccountDetailsModal('AED')" id="acc-tab-AED" class="px-3.5 py-1.5 rounded-full text-[13px] font-semibold bg-[#f2f4f1] text-[#0e0f0c] hover:bg-[#e2e5e0] transition">🇦🇪 AED</button>
+      </div>
+
+      <div id="account-details-modal-body">
+        <!-- Populated dynamically by openAccountDetailsModal(currency) -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 4: DYNAMIC FEATURE / PAYMENT / TX MODAL ==================== -->
+  <div id="modal-universal-feature" class="hidden fixed inset-0 bg-black/40 backdrop-blur-[1px] z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-[22px] max-w-[580px] w-full p-7 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeFeatureModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#f2f4f1] hover:bg-[#e2e5e0] flex items-center justify-center">
+        <svg class="w-4 h-4 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <div id="universal-feature-modal-content">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FLOATING TOAST NOTIFICATION ==================== -->
+  <div id="wise-toast" class="hidden fixed bottom-6 right-6 z-50 bg-[#163300] text-[#9fe870] font-semibold text-[13.5px] px-5 py-3 rounded-full shadow-xl flex items-center gap-2.5">
+    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+    <span id="wise-toast-text">Copied to clipboard</span>
+  </div>
+
+  <!-- ==================== JAVASCRIPT LOGIC & COMPLETE TRANSACTIONS ==================== -->
+  <script>
+    // =========================================================================
+    // 0. TOAST & CLIPBOARD HELPER
+    // =========================================================================
+    function showToast(msg) {
+      const t = document.getElementById("wise-toast");
+      const txt = document.getElementById("wise-toast-text");
+      txt.textContent = msg;
+      t.classList.remove("hidden");
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        t.classList.add("hidden");
+      }, 2400);
+    }
+
+    function copyTextValue(val, label = "Details") {
+      const temp = document.createElement("input");
+      temp.value = val;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand("copy");
+      document.body.removeChild(temp);
+      showToast(`${label} copied: ${val}`);
+    }
+
+    // =========================================================================
+    // 1. CARDS STATE & INTERACTIVE LOGIC
+    // =========================================================================
+    const cardsData = [
+      {
+        id: "3973",
+        last4: "3973",
+        title: "Digital card •••• 3973",
+        label: "Digital card",
+        holder: "Mahboubeh Mehrafshan",
+        role: "Account owner",
+        theme: "green",
+        status: "Ready to use",
+        frozen: false,
+        fullNumber: "4532 8910 6421 3973",
+        expiry: "08/29",
+        cvv: "648",
+        monthlyLimit: "15,000.00 EUR",
+        spentThisMonth: "1,420.00 EUR"
+      },
+      {
+        id: "3882",
+        last4: "3882",
+        title: "EXPENSES •••• 3882",
+        label: "EXPENSES",
+        holder: "Mahboubeh Mehrafshan",
+        role: "Account owner",
+        theme: "purple",
+        status: "Ready to use",
+        frozen: false,
+        fullNumber: "4532 7741 9023 3882",
+        expiry: "11/29",
+        cvv: "912",
+        monthlyLimit: "20,000.00 EUR",
+        spentThisMonth: "1,950.00 EUR"
+      },
+      {
+        id: "5109",
+        last4: "5109",
+        title: "MARKETING ADS •••• 5109",
+        label: "MARKETING ADS",
+        holder: "Sahar Leilabadi",
+        role: "Admin",
+        theme: "purple",
+        status: "Ready to use",
+        frozen: false,
+        fullNumber: "4532 6109 3384 5109",
+        expiry: "04/30",
+        cvv: "305",
+        monthlyLimit: "10,000.00 EUR",
+        spentThisMonth: "1,120.00 EUR",
+        teamOnly: true
+      }
+    ];
+
+    let activeCardId = null;
+    let cardDetailsRevealed = false;
+    let selectedOrderCardType = "digital";
+
+    function getMiniCardThumb(theme) {
+      if (theme === "green") {
+        return `
+          <div class="w-11 h-7 rounded-[5px] bg-gradient-to-br from-[#1f6322] via-[#34942c] to-[#7bd955] relative flex items-start justify-end p-1 shadow-sm shrink-0">
+            <span class="text-[6px] font-black text-white leading-none">7</span>
+          </div>`;
+      }
+      return `
+        <div class="w-11 h-7 rounded-[5px] bg-gradient-to-br from-[#8f7ce0] via-[#a39cf4] to-[#63b3ed] relative flex items-start justify-end p-1 shadow-sm shrink-0">
+          <span class="text-[6px] font-black text-white leading-none">7</span>
+        </div>`;
+    }
+
+    function renderCardsList() {
+      const container = document.getElementById("your-cards-list");
+      const yourCards = cardsData.filter(c => !c.teamOnly);
+
+      const badge = document.getElementById("home-card-count-badge");
+      if (badge) badge.textContent = `${yourCards.length} cards`;
+
+      container.innerHTML = yourCards.map(c => `
+        <div onclick="openCardDetail('${c.id}')" class="flex items-center justify-between py-3.5 px-3 rounded-2xl hover:bg-[#f2f4f1] cursor-pointer transition">
+          <div class="flex items-center gap-4">
+            ${getMiniCardThumb(c.theme)}
+            <div>
+              <div class="text-[15px] font-bold text-[#0e0f0c]">${c.title}</div>
+              <div class="text-[13.5px] text-[#5d6159]">Current account • ${c.frozen ? 'Frozen' : c.status}</div>
+            </div>
+          </div>
+          <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      `).join("");
+    }
+
+    function renderTeamCardsList() {
+      const container = document.getElementById("team-cards-list-container");
+      const query = (document.getElementById("team-card-search")?.value || "").trim().toLowerCase();
+
+      const filtered = cardsData.filter(c => {
+        if (!query) return true;
+        return (
+          c.title.toLowerCase().includes(query) ||
+          c.holder.toLowerCase().includes(query) ||
+          c.last4.includes(query)
+        );
+      });
+
+      const holders = [
+        { name: "Mahboubeh Mehrafshan", initials: "MM", badge: "Account owner", email: "mahbobmhrafshan@gmail.com" },
+        { name: "Sahar Leilabadi", initials: "SL", badge: "Admin", email: "saharleil@gamil.com" }
+      ];
+
+      container.innerHTML = holders.map(h => {
+        const memberCards = filtered.filter(c => c.holder.toLowerCase() === h.name.toLowerCase());
+        if (memberCards.length === 0) return "";
+        return `
+          <div class="border border-[#e6e8e5] rounded-[18px] p-5 bg-white">
+            <div class="flex items-center justify-between pb-4 mb-3 border-b border-[#eff1ee]">
+              <div class="flex items-center gap-3.5">
+                <div class="w-10 h-10 rounded-full bg-[#f2f4f1] flex items-center justify-center font-bold text-[14px] text-[#0e0f0c]">
+                  ${h.initials}
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-[14.5px] font-bold text-[#0e0f0c]">${h.name}</span>
+                    <span class="bg-[#f2f4f1] text-[#0e0f0c] text-[11px] font-semibold px-2.5 py-0.5 rounded-full">${h.badge}</span>
+                  </div>
+                  <div class="text-[12.5px] text-[#5d6159]">${h.email}</div>
+                </div>
+              </div>
+              <span class="text-[12.5px] font-semibold text-[#5d6159]">${memberCards.length} active card${memberCards.length > 1 ? 's' : ''}</span>
+            </div>
+
+            <div class="space-y-2">
+              ${memberCards.map(c => `
+                <div onclick="openCardDetail('${c.id}')" class="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-[#f2f4f1] cursor-pointer transition">
+                  <div class="flex items-center gap-4">
+                    ${getMiniCardThumb(c.theme)}
+                    <div>
+                      <div class="text-[14.5px] font-bold text-[#0e0f0c]">${c.title}</div>
+                      <div class="text-[12.5px] text-[#5d6159]">Current account • ${c.frozen ? 'Frozen' : c.status}</div>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <div class="text-right hidden sm:block">
+                      <div class="text-[13px] font-bold text-[#0e0f0c]">${c.spentThisMonth}</div>
+                      <div class="text-[11.5px] text-[#5d6159]">Limit: ${c.monthlyLimit}</div>
+                    </div>
+                    <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function switchCardsTab(tab) {
+      const yourBtn = document.getElementById("tab-btn-your-cards");
+      const teamBtn = document.getElementById("tab-btn-team-cards");
+      const yourContent = document.getElementById("cards-tab-your");
+      const teamContent = document.getElementById("cards-tab-team");
+
+      if (tab === "your") {
+        yourBtn.className = "pb-3 border-b-2 border-[#163300] text-[14px] font-semibold text-[#0e0f0c] transition";
+        teamBtn.className = "pb-3 border-b-2 border-transparent text-[14px] font-medium text-[#5d6159] hover:text-[#0e0f0c] transition";
+        yourContent.classList.remove("hidden");
+        teamContent.classList.add("hidden");
+      } else {
+        teamBtn.className = "pb-3 border-b-2 border-[#163300] text-[14px] font-semibold text-[#0e0f0c] transition";
+        yourBtn.className = "pb-3 border-b-2 border-transparent text-[14px] font-medium text-[#5d6159] hover:text-[#0e0f0c] transition";
+        teamContent.classList.remove("hidden");
+        yourContent.classList.add("hidden");
+        renderTeamCardsList();
+      }
+    }
+
+    function openCardDetail(cardId) {
+      const card = cardsData.find(c => c.id === cardId);
+      if (!card) return;
+      activeCardId = cardId;
+      cardDetailsRevealed = false;
+
+      document.getElementById("cards-main-subview").classList.add("hidden");
+      document.getElementById("card-detail-subview").classList.remove("hidden");
+      document.getElementById("top-back-btn").classList.remove("hidden");
+
+      updateCardDetailUI(card);
+    }
+
+    function updateCardDetailUI(card) {
+      document.getElementById("detail-card-title").textContent = card.title;
+      document.getElementById("detail-card-subtitle").textContent = `${card.holder} • Current account`;
+      document.getElementById("detail-meta-holder").textContent = card.holder;
+      document.getElementById("detail-meta-limit").textContent = `${card.monthlyLimit} / month`;
+      document.getElementById("detail-card-holder-display").textContent = card.holder.toUpperCase();
+      document.getElementById("detail-card-label-chip").textContent = card.label;
+
+      const visualCard = document.getElementById("detail-visual-card");
+      if (card.theme === "green") {
+        visualCard.className = "w-full max-w-[360px] h-[222px] rounded-[18px] p-6 flex flex-col justify-between text-white shadow-lg relative overflow-hidden transition-all duration-300 bg-gradient-to-br from-[#164e1b] via-[#2c8c30] to-[#80e258]";
+      } else {
+        visualCard.className = "w-full max-w-[360px] h-[222px] rounded-[18px] p-6 flex flex-col justify-between text-white shadow-lg relative overflow-hidden transition-all duration-300 bg-gradient-to-br from-[#6e59cb] via-[#9085ea] to-[#56a8e8]";
+      }
+
+      // Status & Freeze UI
+      const frozenOverlay = document.getElementById("detail-card-frozen-overlay");
+      const statusBadge = document.getElementById("detail-card-badge");
+      const statusText = document.getElementById("detail-card-status-text");
+      const freezeLabel = document.getElementById("btn-freeze-label");
+
+      if (card.frozen) {
+        frozenOverlay.classList.remove("hidden");
+        statusBadge.className = "inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-[#5d6159] bg-[#f2f4f1] px-3 py-0.5 rounded-full mb-2";
+        statusText.textContent = "Frozen";
+        freezeLabel.textContent = "Unfreeze card";
+      } else {
+        frozenOverlay.classList.add("hidden");
+        statusBadge.className = "inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-[#007a27] bg-[#e2f6d5] px-3 py-0.5 rounded-full mb-2";
+        statusText.textContent = "Ready to use";
+        freezeLabel.textContent = "Freeze card";
+      }
+
+      // Reveal / Mask card numbers
+      const numDisplay = document.getElementById("detail-card-number-display");
+      const expDisplay = document.getElementById("detail-card-expiry");
+      const cvvDisplay = document.getElementById("detail-card-cvv");
+      const copyBtn = document.getElementById("copy-card-btn");
+      const revealLabel = document.getElementById("btn-reveal-label");
+
+      if (cardDetailsRevealed) {
+        numDisplay.textContent = card.fullNumber;
+        expDisplay.textContent = card.expiry;
+        cvvDisplay.textContent = card.cvv;
+        copyBtn.classList.remove("hidden");
+        revealLabel.textContent = "Hide details";
+      } else {
+        numDisplay.textContent = `•••• •••• •••• ${card.last4}`;
+        expDisplay.textContent = "••/••";
+        cvvDisplay.textContent = "•••";
+        copyBtn.classList.add("hidden");
+        revealLabel.textContent = "Show details";
+      }
+
+      // Populate recent spend for this card
+      const txListEl = document.getElementById("detail-card-tx-list");
+      const sampleSpend = allTransactions.filter(t => t.icon === "tiktok" || t.icon === "meta" || t.icon === "revolut").slice(0, 4);
+      txListEl.innerHTML = sampleSpend.map(t => `
+        <div class="flex items-center justify-between py-2 border-b border-[#eff1ee] last:border-none">
+          <div class="flex items-center gap-3">
+            ${getTransactionIconHTML(t.icon)}
+            <div>
+              <div class="text-[13.5px] font-bold text-[#0e0f0c]">${t.title}</div>
+              <div class="text-[12px] text-[#5d6159]">${t.subtitle}</div>
+            </div>
+          </div>
+          <div class="text-[13.5px] font-bold text-[#0e0f0c]">${t.amount}</div>
+        </div>
+      `).join("");
+    }
+
+    function toggleRevealCardDetails() {
+      const card = cardsData.find(c => c.id === activeCardId);
+      if (!card) return;
+      cardDetailsRevealed = !cardDetailsRevealed;
+      updateCardDetailUI(card);
+    }
+
+    function toggleFreezeActiveCard() {
+      const card = cardsData.find(c => c.id === activeCardId);
+      if (!card) return;
+      card.frozen = !card.frozen;
+      updateCardDetailUI(card);
+      renderCardsList();
+      renderTeamCardsList();
+    }
+
+    function copyCardNumber() {
+      const card = cardsData.find(c => c.id === activeCardId);
+      if (!card) return;
+      const tempInput = document.createElement("input");
+      tempInput.value = card.fullNumber.replace(/\s+/g, "");
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+
+      const btn = document.getElementById("copy-card-btn");
+      btn.textContent = "Copied!";
+      setTimeout(() => { btn.textContent = "Copy"; }, 1500);
+    }
+
+    // Order Card Modal Functions
+    function openOrderCardModal() {
+      document.getElementById("modal-order-card").classList.remove("hidden");
+    }
+    function closeOrderCardModal() {
+      document.getElementById("modal-order-card").classList.add("hidden");
+    }
+    function selectOrderCardType(type) {
+      selectedOrderCardType = type;
+      const dig = document.getElementById("order-type-digital");
+      const phy = document.getElementById("order-type-physical");
+      if (type === "digital") {
+        dig.className = "border-2 border-[#163300] bg-[#f2f4f1] rounded-2xl p-3.5 cursor-pointer transition";
+        phy.className = "border border-[#d5d9d2] bg-white rounded-2xl p-3.5 cursor-pointer transition";
+      } else {
+        phy.className = "border-2 border-[#163300] bg-[#f2f4f1] rounded-2xl p-3.5 cursor-pointer transition";
+        dig.className = "border border-[#d5d9d2] bg-white rounded-2xl p-3.5 cursor-pointer transition";
+      }
+    }
+    function confirmOrderNewCard() {
+      const holder = document.getElementById("order-card-holder").value;
+      const customLabel = document.getElementById("order-card-label").value.trim();
+      const randomLast4 = String(Math.floor(1000 + Math.random() * 9000));
+      const labelText = customLabel ? customLabel.toUpperCase() : (selectedOrderCardType === "digital" ? "Digital card" : "Physical card");
+
+      const newCard = {
+        id: randomLast4,
+        last4: randomLast4,
+        title: `${labelText} •••• ${randomLast4}`,
+        label: labelText,
+        holder: holder,
+        role: holder.includes("Mahboubeh") ? "Account owner" : "Admin",
+        theme: selectedOrderCardType === "digital" ? "purple" : "green",
+        status: "Ready to use",
+        frozen: false,
+        fullNumber: `4532 8412 5590 ${randomLast4}`,
+        expiry: "10/30",
+        cvv: String(Math.floor(100 + Math.random() * 899)),
+        monthlyLimit: "10,000.00 EUR",
+        spentThisMonth: "0.00 EUR",
+        teamOnly: !holder.includes("Mahboubeh")
+      };
+
+      cardsData.push(newCard);
+      document.getElementById("order-card-label").value = "";
+      closeOrderCardModal();
+      renderCardsList();
+      renderTeamCardsList();
+      openCardDetail(newCard.id);
+    }
+
+    // Spending Limits Modal
+    function openSpendingLimitsModal() {
+      document.getElementById("modal-spending-limits").classList.remove("hidden");
+    }
+    function closeSpendingLimitsModal() {
+      document.getElementById("modal-spending-limits").classList.add("hidden");
+    }
+
+    // =========================================================================
+    // 2. COMPLETE TRANSACTIONS DATA (JULY 24, 2026 -> OCT 24, 2026 + HISTORICAL)
+    // =========================================================================
+    // Exact mathematical breakdown per user specifications:
+    // - Month 1 (Jul 24 – Aug 23, 2026):
+    //   * Income: 34 x 200 EUR = 6,800 EUR
+    //   * Ads (TikTok Ads & Meta Ads): 25 micro-txs = 2,400.00 EUR
+    //   * Revolut transfers: 4 transfers = 1,250.00 EUR
+    // - Month 2 (Aug 24 – Sep 23, 2026):
+    //   * Income: 35 x 200 EUR = 7,000 EUR
+    //   * Ads (TikTok Ads & Meta Ads): 25 micro-txs = 2,100.00 EUR
+    //   * Revolut transfers: 4 transfers = 1,200.00 EUR
+    //   * Nigeria Salary (Chinedu Okafor): 800.00 EUR
+    // - Month 3 (Sep 24 – Oct 24, 2026):
+    //   * Income: 36 x 200 EUR = 7,200 EUR
+    //   * Ads (TikTok Ads & Meta Ads): 25 micro-txs = 2,100.00 EUR
+    //   * Revolut transfers: 4 transfers = 1,270.00 EUR
+    //   * Nigeria Salary (Chinedu Okafor): 800.00 EUR
+
+    function buildThreeMonthsTransactions() {
+      const clientPayers = [
+        "Stripe Payments Europe Ltd",
+        "Klara Lindqvist",
+        "Lukas Vance",
+        "Mateo Rossi",
+        "Nordic Digital Media AB",
+        "Elena Rostova",
+        "Vanguard E-Commerce GmbH",
+        "julien.moreau@studio.fr",
+        "Apex Commerce Ltd",
+        "Sander Van Dijk",
+        "BlueWave Consulting BV",
+        "Sofia Lindholm",
+        "Tomasz Kowalski",
+        " Lumina Growth Partners",
+        "Henrik Jorgensen",
+        "Aurelia Dubois"
+      ];
+
+      // 25 exact ad amounts summing to 2,100.00 EUR (used for Month 3 and Month 2)
+      const adAmounts2100 = [
+        "84.50", "92.00", "75.50", "110.00", "64.00",
+        "88.25", "95.75", "72.00", "104.00", "68.00",
+        "91.50", "76.50", "83.00", "89.00", "79.00",
+        "105.00", "63.00", "94.00", "74.00", "86.00",
+        "82.00", "90.00", "78.00", "85.00", "68.00"
+      ]; // Sum = 2,100.00 EUR
+
+      // 25 exact ad amounts summing to 2,400.00 EUR (used for Month 1)
+      const adAmounts2400 = [
+        "96.50", "104.00", "87.50", "122.00", "76.00",
+        "100.25", "107.75", "84.00", "116.00", "80.00",
+        "103.50", "88.50", "95.00", "101.00", "91.00",
+        "117.00", "75.00", "106.00", "86.00", "98.00",
+        "94.00", "102.00", "90.00", "97.00", "80.00"
+      ]; // Sum = 2,400.00 EUR
+
+      // Dates for Month 3 (Sep 24, 2026 -> Oct 24, 2026) - descending
+      const m3Dates = [
+        "October 24, 2026", "October 23, 2026", "October 22, 2026", "October 21, 2026", "October 20, 2026",
+        "October 19, 2026", "October 18, 2026", "October 17, 2026", "October 16, 2026", "October 15, 2026",
+        "October 14, 2026", "October 13, 2026", "October 12, 2026", "October 11, 2026", "October 10, 2026",
+        "October 9, 2026", "October 8, 2026", "October 7, 2026", "October 6, 2026", "October 5, 2026",
+        "October 4, 2026", "October 3, 2026", "October 2, 2026", "October 1, 2026", "September 30, 2026",
+        "September 29, 2026", "September 28, 2026", "September 27, 2026", "September 26, 2026", "September 25, 2026",
+        "September 24, 2026"
+      ];
+
+      // Dates for Month 2 (Aug 24, 2026 -> Sep 23, 2026) - descending
+      const m2Dates = [
+        "September 23, 2026", "September 22, 2026", "September 21, 2026", "September 20, 2026", "September 19, 2026",
+        "September 18, 2026", "September 17, 2026", "September 16, 2026", "September 15, 2026", "September 14, 2026",
+        "September 13, 2026", "September 12, 2026", "September 11, 2026", "September 10, 2026", "September 9, 2026",
+        "September 8, 2026", "September 7, 2026", "September 6, 2026", "September 5, 2026", "September 4, 2026",
+        "September 3, 2026", "September 2, 2026", "September 1, 2026", "August 31, 2026", "August 30, 2026",
+        "August 29, 2026", "August 28, 2026", "August 27, 2026", "August 26, 2026", "August 25, 2026",
+        "August 24, 2026"
+      ];
+
+      // Dates for Month 1 (Jul 24, 2026 -> Aug 23, 2026) - descending
+      const m1Dates = [
+        "August 23, 2026", "August 22, 2026", "August 21, 2026", "August 20, 2026", "August 19, 2026",
+        "August 18, 2026", "August 17, 2026", "August 16, 2026", "August 15, 2026", "August 14, 2026",
+        "August 13, 2026", "August 12, 2026", "August 11, 2026", "August 10, 2026", "August 9, 2026",
+        "August 8, 2026", "August 7, 2026", "August 6, 2026", "August 5, 2026", "August 4, 2026",
+        "August 3, 2026", "August 2, 2026", "August 1, 2026", "July 31, 2026", "July 30, 2026",
+        "July 29, 2026", "July 28, 2026", "July 27, 2026", "July 26, 2026", "July 25, 2026",
+        "July 24, 2026"
+      ];
+
+      function generateCycleEvents(datesList, incomeCount, adAmounts, revolutAmounts, includeSalary) {
+        const eventsByDay = datesList.map(() => []);
+
+        // 1. Distribute 200 EUR incoming client deposits across the month
+        for (let i = 0; i < incomeCount; i++) {
+          const dayIdx = i % datesList.length;
+          const payer = clientPayers[(i * 3 + dayIdx) % clientPayers.length].trim();
+          eventsByDay[dayIdx].push({
+            icon: "down",
+            title: payer,
+            subtitle: "Received",
+            amount: "+ 200 EUR",
+            subAmount: "",
+            positive: true,
+            muted: false
+          });
+        }
+
+        // 2. Distribute 25 TikTok Ads & Meta Ads micro-transactions
+        for (let i = 0; i < adAmounts.length; i++) {
+          const dayIdx = Math.floor((i * datesList.length) / adAmounts.length);
+          const isTikTok = i % 2 === 0;
+          const spender = i % 3 === 0 ? "Spent by Sahar Leilabadi" : "Spent by Mahboubeh Mehrafshan";
+          eventsByDay[dayIdx].push({
+            icon: isTikTok ? "tiktok" : "meta",
+            title: isTikTok ? (i % 4 === 0 ? "TikTok Promote" : "TikTok Ads") : "Meta Ads",
+            subtitle: spender,
+            amount: `${adAmounts[i]} EUR`,
+            subAmount: "",
+            positive: false,
+            muted: false
+          });
+        }
+
+        // 3. Distribute Revolut transfers (4 transfers per month)
+        const revDays = [2, 9, 17, 25];
+        revolutAmounts.forEach((amt, idx) => {
+          const dIdx = revDays[idx];
+          const spender = idx % 2 === 0 ? "Spent by Mahboubeh Mehrafshan" : "Spent by Sahar Leilabadi";
+          eventsByDay[dIdx].push({
+            icon: "revolut",
+            title: "Revolut",
+            subtitle: spender,
+            amount: `${amt} EUR`,
+            subAmount: "",
+            positive: false,
+            muted: false
+          });
+        });
+
+        // 4. Nigerian Contractor Salary (Month 2 and Month 3)
+        if (includeSalary) {
+          eventsByDay[9].push({
+            icon: "up",
+            title: "Chinedu Okafor",
+            subtitle: "Sent • Contractor salary (Lagos, NG)",
+            amount: "800.00 EUR",
+            subAmount: "",
+            positive: false,
+            muted: false
+          });
+        }
+
+        // Flatten into Wise date-grouped rows (only first row of each date carries the date label)
+        const rows = [];
+        datesList.forEach((dateLabel, dIdx) => {
+          const dayItems = eventsByDay[dIdx];
+          dayItems.forEach((item, itemIdx) => {
+            rows.push({
+              date: itemIdx === 0 ? dateLabel : "",
+              ...item
+            });
+          });
+        });
+        return rows;
+      }
+
+      // Month 3: Sep 24 – Oct 24, 2026 (Income: 36x200=7200, Ads: 2100, Revolut: 320+310+320+320=1270, Salary: 800)
+      const m3Rows = generateCycleEvents(
+        m3Dates,
+        36,
+        adAmounts2100,
+        ["320.00", "310.00", "320.00", "320.00"],
+        true
+      );
+
+      // Month 2: Aug 24 – Sep 23, 2026 (Income: 35x200=7000, Ads: 2100, Revolut: 300+300+300+300=1200, Salary: 800)
+      const m2Rows = generateCycleEvents(
+        m2Dates,
+        35,
+        adAmounts2100,
+        ["300.00", "300.00", "300.00", "300.00"],
+        true
+      );
+
+      // Month 1: Jul 24 – Aug 23, 2026 (Income: 34x200=6800, Ads: 2400, Revolut: 320+310+310+310=1250, Salary: false)
+      const m1Rows = generateCycleEvents(
+        m1Dates,
+        34,
+        adAmounts2400,
+        ["320.00", "310.00", "310.00", "310.00"],
+        false
+      );
+
+      const combined = [...m3Rows, ...m2Rows, ...m1Rows];
+      if (combined.length > 0) {
+        combined[0].highlighted = true;
+      }
+      return combined;
+    }
+
+    // Historical transactions from original screenshots (kept intact below July 24, 2026)
+    const historicalTransactions = [
+      { date: "October 1, 2025", icon: "cashback", title: "Card cashback", subtitle: "", amount: "+ 4 EUR", subAmount: "", positive: true, muted: false },
+      { date: "September 10, 2025", icon: "grid", title: "Universitatea Ovidius", subtitle: "", amount: "400 EUR", subAmount: "", positive: false, muted: false },
+      { date: "", icon: "grid", title: "Universitatea Ovidius", subtitle: "", amount: "400 EUR", subAmount: "", positive: false, muted: false },
+      { date: "September 9, 2025", icon: "down", title: "Hadi Beik Mohammadi", subtitle: "", amount: "+ 1,000 EUR", subAmount: "", positive: true, muted: false },
+      { date: "September 4, 2025", icon: "up", title: "MAHBOUBEH MEHRAFSHAN", subtitle: "Sent", amount: "496.64 EUR", subAmount: "", positive: false, muted: false },
+      { date: "", icon: "swap", title: "To EUR", subtitle: "Moved", amount: "496.64 EUR", subAmount: "801.50 CAD", positive: false, muted: false },
+      { date: "", icon: "down", title: "ANNA ASADI", subtitle: "", amount: "+ 801.50 CAD", subAmount: "", positive: true, muted: false },
+      { date: "August 1, 2025", icon: "revolut", title: "Revolut", subtitle: "Spent by Sahar Leilabadi", amount: "184.93 EUR", subAmount: "", positive: false, muted: false },
+      { date: "", icon: "revolut", title: "Revolut", subtitle: "Spent by Sahar Leilabadi", amount: "200 EUR", subAmount: "", positive: false, muted: false },
+      { date: "", icon: "swap", title: "To EUR", subtitle: "Moved by Sahar Leilabadi", amount: "39.54 EUR", subAmount: "", positive: false, muted: false },
+      { date: "", icon: "cashback", title: "Card cashback", subtitle: "", amount: "+ 0.02 EUR", subAmount: "", positive: true, muted: false },
+      { date: "July 9, 2025", icon: "zoho-cube", title: "Zoho Workplace", subtitle: "Spent by Sahar Leilabadi", amount: "4.80 EUR", subAmount: "", positive: false, muted: false },
+      { date: "July 1, 2025", icon: "cashback", title: "Card cashback", subtitle: "", amount: "+ 0.06 EUR", subAmount: "", positive: true, muted: false },
+      { date: "June 16, 2025", icon: "huggingface", title: "Hugging Face", subtitle: "Spent by Sahar Leilabadi", amount: "9 EUR", subAmount: "", positive: false, muted: false },
+      { date: "June 9, 2025", icon: "zoho-cube", title: "Zoho Workplace", subtitle: "Spent by Sahar Leilabadi", amount: "4.80 EUR", subAmount: "", positive: false, muted: false },
+      { date: "June 2, 2025", icon: "cashback", title: "Card cashback", subtitle: "", amount: "+ 0.55 EUR", subAmount: "", positive: true, muted: false },
+      { date: "May 15, 2025", icon: "huggingface", title: "Hugging Face", subtitle: "Spent by Sahar Leilabadi", amount: "9 EUR", subAmount: "", positive: false, muted: false },
+      { date: "", icon: "huggingface", title: "Hugging Face", subtitle: "By Sahar Leilabadi • Cancelled", amount: "10 EUR", subAmount: "", positive: false, muted: true },
+      { date: "May 9, 2025", icon: "zoho-corp", title: "Zoho Corp", subtitle: "Spent by Sahar Leilabadi", amount: "4.80 EUR", subAmount: "", positive: false, muted: false },
+      { date: "May 1, 2025", icon: "cloudtalk", title: "CloudTalk", subtitle: "Spent by Sahar Leilabadi", amount: "81 EUR", subAmount: "", positive: false, muted: false },
+      { date: "April 25, 2025", icon: "cloudtalk", title: "CloudTalk", subtitle: "Spent by Sahar Leilabadi", amount: "18.90 EUR", subAmount: "", positive: false, muted: false },
+      { date: "April 24, 2025", icon: "cloudtalk", title: "CloudTalk", subtitle: "By Sahar Leilabadi • Cancelled", amount: "1 EUR", subAmount: "", positive: false, muted: true },
+      { date: "April 11, 2025", icon: "tiktok", title: "TikTok Promote", subtitle: "By Sahar Leilabadi • Refunded", amount: "+ 24.03 EUR", subAmount: "", positive: true, muted: false },
+      { date: "", icon: "tiktok", title: "TikTok Ads", subtitle: "By Sahar Leilabadi • Refunded", amount: "+ 18.00 EUR", subAmount: "", positive: true, muted: false },
+      { date: "March 18, 2025", icon: "tiktok", title: "TikTok Promote", subtitle: "Spent by Sahar Leilabadi", amount: "24.03 EUR", subAmount: "", positive: false, muted: false },
+      { date: "March 17, 2025", icon: "tiktok", title: "TikTok Promote", subtitle: "Spent by Sahar Leilabadi", amount: "48.09 EUR", subAmount: "", positive: false, muted: false },
+      { date: "", icon: "tiktok", title: "TikTok Ads", subtitle: "By Sahar Leilabadi • Refunded", amount: "+ 10 EUR", subAmount: "", positive: true, muted: false },
+      { date: "", icon: "tiktok", title: "TikTok Ads", subtitle: "Spent by Sahar Leilabadi", amount: "10 EUR", subAmount: "", positive: false, muted: false },
+      { date: "", icon: "grid", title: "Mixalto Ltd", subtitle: "Spent by Sahar Leilabadi", amount: "40.99 EUR", subAmount: "", positive: false, muted: false },
+      { date: "February 21, 2025", icon: "down", title: "Rorane Zbinden", subtitle: "", amount: "+ 550 EUR", subAmount: "", positive: true, muted: false },
+      { date: "January 31, 2025", icon: "up", title: "For your account details", subtitle: "", amount: "45 EUR", subAmount: "", positive: false, muted: false }
+    ];
+
+    const allTransactions = [...buildThreeMonthsTransactions(), ...historicalTransactions];
+
+    // Helper function to generate exact Brand/System Icons for each row
+    function getTransactionIconHTML(type) {
+      switch (type) {
+        case "tiktok":
+          return `
+            <div class="w-11 h-11 rounded-full bg-black flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                <path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 004.3 1.38V7.3s-1.88.09-3.24-1.48z" fill="#25F4EE" transform="translate(-0.6, -0.5)"/>
+                <path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 004.3 1.38V7.3s-1.88.09-3.24-1.48z" fill="#FE2C55" transform="translate(0.6, 0.5)"/>
+                <path d="M16.6 5.82A4.28 4.28 0 0115.54 3h-3.09v12.4a2.59 2.59 0 01-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 004.3 1.38V7.3s-1.88.09-3.24-1.48z" fill="#ffffff"/>
+              </svg>
+            </div>`;
+        case "meta":
+          return `
+            <div class="w-11 h-11 rounded-full bg-[#0668E1] flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.739-8-4.585 0-4.585 8 0 8 5.606 0 7.644-8 12.74-8z"/>
+              </svg>
+            </div>`;
+        case "cloudtalk":
+          return `
+            <div class="w-11 h-11 rounded-full bg-[#1991eb] flex items-center justify-center shrink-0">
+              <span class="text-white font-black text-[21px] leading-none tracking-tighter">C</span>
+            </div>`;
+        case "huggingface":
+          return `
+            <div class="w-11 h-11 rounded-full bg-white flex items-center justify-center shrink-0 text-[28px]">
+              🤗
+            </div>`;
+        case "zoho-cube":
+          return `
+            <div class="w-11 h-11 rounded-full bg-white flex items-center justify-center shrink-0">
+              <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="#e42527" stroke-width="1.7">
+                <path stroke-linejoin="round" d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/>
+                <path stroke-linejoin="round" d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>
+              </svg>
+            </div>`;
+        case "zoho-corp":
+          return `
+            <div class="w-11 h-11 rounded-full bg-white flex items-center justify-center shrink-0">
+              <div class="flex items-center gap-0.5 scale-90">
+                <span class="w-3 h-3 bg-[#e42527] text-white text-[7px] font-bold flex items-center justify-center rounded-[1px]">Z</span>
+                <span class="w-3 h-3 bg-[#2ca01c] text-white text-[7px] font-bold flex items-center justify-center rounded-[1px]">O</span>
+                <span class="w-3 h-3 bg-[#0073ea] text-white text-[7px] font-bold flex items-center justify-center rounded-[1px]">H</span>
+                <span class="w-3 h-3 bg-[#f9b21d] text-white text-[7px] font-bold flex items-center justify-center rounded-[1px]">O</span>
+              </div>
+            </div>`;
+        case "revolut":
+          return `
+            <div class="w-11 h-11 rounded-full bg-white flex items-center justify-center shrink-0">
+              <span class="text-[#0e0f0c] font-black text-[23px] tracking-tighter" style="font-family: Georgia, serif;">R</span>
+            </div>`;
+        case "down":
+          return `
+            <div class="w-11 h-11 rounded-full bg-[#eaede8] flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0l-5-5m5 5l5-5"/>
+              </svg>
+            </div>`;
+        case "up":
+          return `
+            <div class="w-11 h-11 rounded-full bg-[#eaede8] flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m0 0l-5 5m5-5l5 5"/>
+              </svg>
+            </div>`;
+        case "swap":
+          return `
+            <div class="w-11 h-11 rounded-full bg-[#eaede8] flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 12h10m0 0l-3.5-3.5M17 12l-3.5 3.5M7 12l3.5-3.5M7 12l3.5 3.5"/>
+              </svg>
+            </div>`;
+        case "grid":
+          return `
+            <div class="w-11 h-11 rounded-full bg-[#eaede8] flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+                <rect x="5" y="5" width="5.5" height="5.5" rx="1"/><rect x="13.5" y="5" width="5.5" height="5.5" rx="1"/>
+                <rect x="5" y="13.5" width="5.5" height="5.5" rx="1"/><rect x="13.5" y="13.5" width="5.5" height="5.5" rx="1"/>
+              </svg>
+            </div>`;
+        default:
+          return `
+            <div class="w-11 h-11 rounded-full bg-[#e3e6e1] flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5 text-[#0e0f0c]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <circle cx="10" cy="10" r="5.5"/><circle cx="15" cy="15" r="4.8" fill="#e3e6e1"/>
+                <path stroke-linecap="round" d="M15 13.2v3.6m-1.8-1.8h3.6"/>
+              </svg>
+            </div>`;
+      }
+    }
+
+    function renderHomePreviewTransactions() {
+      const previewEl = document.getElementById("home-transactions-preview");
+      const topThree = allTransactions.slice(0, 3);
+      previewEl.innerHTML = topThree.map(tx => `
+        <div onclick="switchView('transactions')" class="flex items-center justify-between py-2.5 px-2 rounded-xl hover:bg-[#f2f4f1] cursor-pointer transition">
+          <div class="flex items-center gap-4">
+            ${getTransactionIconHTML(tx.icon)}
+            <div>
+              <div class="text-[14.5px] font-semibold text-[#0e0f0c]">${tx.title}</div>
+              <div class="text-[13px] text-[#5d6159]">Oct 24${tx.subtitle ? ' • ' + tx.subtitle : ''}</div>
+            </div>
+          </div>
+          <div class="text-[14.5px] font-bold ${tx.positive ? 'text-[#007a27]' : 'text-[#0e0f0c]'}">${tx.amount}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderTransactions(filterQuery = "") {
+      const container = document.getElementById("transactions-list-container");
+      const q = filterQuery.trim().toLowerCase();
+
+      const filtered = allTransactions.filter(tx => {
+        if (!q) return true;
+        return (
+          tx.title.toLowerCase().includes(q) ||
+          tx.subtitle.toLowerCase().includes(q) ||
+          tx.amount.toLowerCase().includes(q) ||
+          tx.date.toLowerCase().includes(q)
+        );
+      });
+
+      container.innerHTML = filtered.map((tx, idx) => {
+        const originalIdx = allTransactions.indexOf(tx);
+        const targetIdx = originalIdx !== -1 ? originalIdx : idx;
+        const titleColor = tx.muted ? "text-[#5d6159] font-medium" : "text-[#0e0f0c] font-bold";
+        const amountColor = tx.positive
+          ? "text-[#007a27] font-bold"
+          : tx.muted
+            ? "text-[#5d6159] font-semibold"
+            : "text-[#0e0f0c] font-bold";
+
+        return `
+          <div onclick="openTransactionDetailModal(${targetIdx})" class="tx-row ${tx.highlighted && !q ? 'highlighted-first' : ''}">
+            <div class="text-[13.5px] text-[#5d6159] pr-2">${tx.date}</div>
+
+            <div class="flex items-center gap-4">
+              ${getTransactionIconHTML(tx.icon)}
+              <div>
+                <div class="text-[14.5px] ${titleColor} leading-snug">${tx.title}</div>
+                ${tx.subtitle ? `<div class="text-[13px] text-[#5d6159] mt-0.5">${tx.subtitle}</div>` : ''}
+              </div>
+            </div>
+
+            <div class="flex justify-center" onclick="event.stopPropagation(); openTransactionDetailModal(${targetIdx})">
+              <div class="relative w-7 h-7 rounded-full bg-[#e6ebe4] flex items-center justify-center text-[#163300] hover:bg-[#d8e0d5]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M7 3h10v18l-2.5-1.5L12 21l-2.5-1.5L7 21V3zm3 5h4m-4 4h4"/>
+                </svg>
+                <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#f2f4f1] border border-white text-[#0e0f0c] flex items-center justify-center text-[11px] font-bold">+</span>
+              </div>
+            </div>
+
+            <div class="text-right pr-2">
+              <div class="text-[14.5px] ${amountColor}">${tx.amount}</div>
+              ${tx.subAmount ? `<div class="text-[12.5px] text-[#5d6159] mt-0.5">${tx.subAmount}</div>` : ''}
+            </div>
+
+            <div class="flex justify-end">
+              <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function filterTransactions() {
+      const val = document.getElementById("tx-search-input").value;
+      renderTransactions(val);
+    }
+
+    // =========================================================================
+    // 3. VIEW CONTROLLER, TEAM LIST, ACCOUNT DETAILS & UNIVERSAL MODALS
+    // =========================================================================
+    const teamMembersData = [
+      {
+        initials: "MM",
+        name: "MAHBOUBEH MEHRAFSHAN",
+        email: "mahbobmhrafshan@gmail.com",
+        isYou: true,
+        role: "Account owner",
+        permissions: "Full account access, cards, team & approvals"
+      },
+      {
+        initials: "SL",
+        name: "SAHAR LEILABADI",
+        email: "saharleil@gamil.com",
+        isYou: false,
+        role: "Admin",
+        permissions: "Can spend with cards, view balances & manage ads"
+      }
+    ];
+
+    function renderTeamMembersView() {
+      const countEl = document.getElementById("team-active-count-header");
+      const listEl = document.getElementById("team-members-list-container");
+      if (!listEl) return;
+      countEl.textContent = `Active members (${teamMembersData.length})`;
+
+      listEl.innerHTML = teamMembersData.map((m, idx) => `
+        <div onclick="openTeamMemberModal(${idx})" class="flex items-center justify-between py-4 px-2 rounded-2xl hover:bg-[#f2f4f1] cursor-pointer transition">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full border border-[#e2e5e0] flex items-center justify-center font-bold text-[16px] text-[#0e0f0c]">
+              ${m.initials}
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[14.5px] font-bold text-[#0e0f0c]">${m.name}</span>
+                ${m.isYou ? `<span class="bg-[#163300] text-[#9fe870] text-[11px] font-bold px-2.5 py-0.5 rounded-full">You</span>` : ''}
+                <span class="bg-[#f2f4f1] text-[#0e0f0c] text-[11px] font-semibold px-2.5 py-0.5 rounded-full">${m.role}</span>
+              </div>
+              <div class="text-[13.5px] text-[#5d6159] mt-0.5">${m.email}</div>
+            </div>
+          </div>
+          <svg class="w-4 h-4 text-[#5d6159]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      `).join("");
+    }
+
+    function openTeamMemberModal(idx) {
+      const m = teamMembersData[idx];
+      if (!m) return;
+      const box = document.getElementById("universal-feature-modal-content");
+      box.innerHTML = `
+        <div class="flex items-center gap-4 mb-5">
+          <div class="w-14 h-14 rounded-full bg-[#f2f4f1] border border-[#e2e5e0] flex items-center justify-center font-extrabold text-[18px] text-[#0e0f0c]">${m.initials}</div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-[20px] font-extrabold text-[#0e0f0c]">${m.name}</h2>
+              <span class="bg-[#e2f6d5] text-[#007a27] text-[11.5px] font-bold px-2.5 py-0.5 rounded-full">${m.role}</span>
+            </div>
+            <p class="text-[13.5px] text-[#5d6159]">${m.email}</p>
+          </div>
+        </div>
+        <div class="bg-[#f2f4f1] rounded-2xl p-4 space-y-3 text-[13.5px] mb-6">
+          <div class="flex justify-between border-b border-[#dcdfda] pb-2">
+            <span class="text-[#5d6159]">Role & access</span>
+            <span class="font-bold text-[#0e0f0c]">${m.role}</span>
+          </div>
+          <div class="flex justify-between border-b border-[#dcdfda] pb-2">
+            <span class="text-[#5d6159]">Permissions</span>
+            <span class="font-semibold text-[#0e0f0c]">${m.permissions}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-[#5d6159]">2-step verification</span>
+            <span class="font-bold text-[#007a27]">Enabled</span>
+          </div>
+        </div>
+        <div class="flex justify-end gap-3">
+          <button onclick="closeFeatureModal(); switchView('cards'); switchCardsTab('team')" class="btn-wise-secondary py-2.5 px-5">View member cards</button>
+          <button onclick="closeFeatureModal()" class="btn-wise-primary py-2.5 px-6">Done</button>
+        </div>
+      `;
+      document.getElementById("modal-universal-feature").classList.remove("hidden");
+    }
+
+    // Complete Bank Account Details Data for EUR, GBP, CAD, USD, AED
+    const bankAccountDetailsDB = {
+      EUR: {
+        name: "Euro",
+        balance: "€9,080.00",
+        holder: "Mixalto Ltd",
+        fields: [
+          { label: "Account holder", value: "Mixalto Ltd" },
+          { label: "IBAN", value: "BE68 9670 2489 1027 6415" },
+          { label: "Bank code (BIC/SWIFT)", value: "TRWIBEB1XXX" },
+          { label: "Bank name", value: "Wise Europe SA" },
+          { label: "Bank address", value: "Rue du Trône 100, 3rd floor, Brussels, 1050, Belgium" }
+        ]
+      },
+      GBP: {
+        name: "British Pound",
+        balance: "£0.00",
+        holder: "Mixalto Ltd",
+        fields: [
+          { label: "Account holder", value: "Mixalto Ltd" },
+          { label: "Sort code", value: "23-14-70" },
+          { label: "Account number", value: "84929632" },
+          { label: "IBAN", value: "GB44 TRWI 2314 7084 9296 32" },
+          { label: "Swift/BIC", value: "TRWIGB2LXXX" },
+          { label: "Bank address", value: "56 Shoreditch High Street, London, E1 6JJ, United Kingdom" }
+        ]
+      },
+      CAD: {
+        name: "Canadian Dollar",
+        balance: "C$0.00",
+        holder: "Mixalto Ltd",
+        fields: [
+          { label: "Account holder", value: "Mixalto Ltd" },
+          { label: "Institution number", value: "621" },
+          { label: "Transit number", value: "16001" },
+          { label: "Account number", value: "200103459" },
+          { label: "Bank address", value: "99 Bank Street, Suite 1420, Ottawa, ON K1P 1H4, Canada" }
+        ]
+      },
+      USD: {
+        name: "US Dollar",
+        balance: "$0.00",
+        holder: "Mixalto Ltd",
+        fields: [
+          { label: "Account holder", value: "Mixalto Ltd" },
+          { label: "Routing number (ACH & Wire)", value: "026073150" },
+          { label: "Account number", value: "831000492817" },
+          { label: "Account type", value: "Checking (Business)" },
+          { label: "Swift/BIC", value: "CMFGUS33" },
+          { label: "Bank address", value: "30 W. 26th Street, Sixth Floor, New York, NY 10010, United States" }
+        ]
+      },
+      AED: {
+        name: "UAE Dirham",
+        balance: "AED 0.00",
+        holder: "Mixalto Ltd",
+        fields: [
+          { label: "Account holder", value: "Mixalto Ltd" },
+          { label: "IBAN", value: "AE41 0330 0000 1984 0027 641" },
+          { label: "BIC / SWIFT code", value: "TRWIAEADXXX" },
+          { label: "Bank address", value: "DIFC, Gate Village 8, Level 3, Dubai, United Arab Emirates" }
+        ]
+      }
+    };
+
+    function openAccountDetailsModal(currencyCode = "EUR") {
+      const data = bankAccountDetailsDB[currencyCode] || bankAccountDetailsDB.EUR;
+      ["EUR", "GBP", "CAD", "USD", "AED"].forEach(code => {
+        const btn = document.getElementById(`acc-tab-${code}`);
+        if (!btn) return;
+        if (code === currencyCode) {
+          btn.className = "px-3.5 py-1.5 rounded-full text-[13px] font-bold bg-[#163300] text-[#9fe870] transition";
+        } else {
+          btn.className = "px-3.5 py-1.5 rounded-full text-[13px] font-semibold bg-[#f2f4f1] text-[#0e0f0c] hover:bg-[#e2e5e0] transition";
+        }
+      });
+
+      const allSummaryText = data.fields.map(f => `${f.label}: ${f.value}`).join(" | ");
+
+      document.getElementById("account-details-modal-body").innerHTML = `
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c]">${data.name} account details</h2>
+            <p class="text-[13.5px] text-[#5d6159]">Balance: <span class="font-bold text-[#0e0f0c]">${data.balance}</span> • Ready to receive payments</p>
+          </div>
+          <span class="bg-[#e2f6d5] text-[#007a27] text-[12px] font-bold px-3 py-1 rounded-full">Active</span>
+        </div>
+
+        <div class="bg-[#f2f4f1] rounded-[18px] p-5 space-y-3.5 mb-6">
+          ${data.fields.map(f => `
+            <div class="flex items-center justify-between gap-4 border-b border-[#dcdfda] last:border-none pb-3 last:pb-0">
+              <div>
+                <div class="text-[12px] text-[#5d6159]">${f.label}</div>
+                <div class="text-[14.5px] font-bold text-[#0e0f0c] font-mono mt-0.5">${f.value}</div>
+              </div>
+              <button onclick="copyTextValue('${f.value}', '${f.label}')" class="btn-wise-secondary text-[12px] py-1 px-3 shrink-0">Copy</button>
+            </div>
+          `).join("")}
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <button onclick="copyTextValue('${allSummaryText}', '${data.name} account details')" class="btn-wise-primary py-2.5 px-5">
+            Copy all details
+          </button>
+          <div class="flex items-center gap-2">
+            <button onclick="closeAccountDetailsModal(); openFeatureModal('statements')" class="btn-wise-neutral py-2.5 px-4">
+              Download proof of account (PDF)
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("modal-account-details").classList.remove("hidden");
+    }
+
+    function closeAccountDetailsModal() {
+      document.getElementById("modal-account-details").classList.add("hidden");
+    }
+
+    // Transaction Detail & Receipt Modal
+    function openTransactionDetailModal(idx) {
+      const tx = allTransactions[idx];
+      if (!tx) return;
+      const txId = `#TRANSFER-${98412040 - idx * 73}`;
+      const displayDate = tx.date || "October 2026";
+      const box = document.getElementById("universal-feature-modal-content");
+
+      box.innerHTML = `
+        <div class="flex items-center gap-4 mb-5">
+          ${getTransactionIconHTML(tx.icon)}
+          <div>
+            <span class="bg-[#e2f6d5] text-[#007a27] text-[11.5px] font-bold px-2.5 py-0.5 rounded-full">Completed</span>
+            <h2 class="text-[21px] font-extrabold text-[#0e0f0c] mt-1">${tx.title}</h2>
+            <p class="text-[13px] text-[#5d6159]">${displayDate}${tx.subtitle ? ' • ' + tx.subtitle : ''}</p>
+          </div>
+        </div>
+
+        <div class="bg-[#f2f4f1] rounded-[18px] p-5 space-y-3 text-[13.5px] mb-5">
+          <div class="flex justify-between border-b border-[#dcdfda] pb-2.5">
+            <span class="text-[#5d6159]">Amount</span>
+            <span class="text-[16px] font-extrabold ${tx.positive ? 'text-[#007a27]' : 'text-[#0e0f0c]'}">${tx.amount}</span>
+          </div>
+          <div class="flex justify-between border-b border-[#dcdfda] pb-2.5">
+            <span class="text-[#5d6159]">Account</span>
+            <span class="font-bold text-[#0e0f0c]">Mixalto Ltd • Current account (EUR)</span>
+          </div>
+          <div class="flex justify-between border-b border-[#dcdfda] pb-2.5">
+            <span class="text-[#5d6159]">Transaction reference</span>
+            <span class="font-mono font-bold text-[#0e0f0c]">${txId}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-[#5d6159]">Wise fee</span>
+            <span class="font-semibold text-[#0e0f0c]">0.00 EUR (Included)</span>
+          </div>
+        </div>
+
+        <div class="border border-dashed border-[#b9beb6] rounded-xl p-4 text-center mb-6 cursor-pointer hover:bg-[#f8f9f7]" onclick="showToast('Receipt attachment linked to ' + '${txId}')">
+          <div class="text-[13.5px] font-bold text-[#163300]">+ Upload invoice or receipt attachment (PDF / JPG)</div>
+          <div class="text-[12px] text-[#5d6159]">Attach proof of expense for your accountant</div>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <button onclick="showToast('PDF Receipt downloaded for ' + '${txId}')" class="btn-wise-secondary py-2.5 px-5">Download PDF receipt</button>
+          <button onclick="closeFeatureModal()" class="btn-wise-primary py-2.5 px-6">Done</button>
+        </div>
+      `;
+
+      document.getElementById("modal-universal-feature").classList.remove("hidden");
+    }
+
+    // Export CSV of Transactions
+    function exportTransactionsCSV() {
+      const headers = ["Date,Title,Details,Amount"];
+      const rows = allTransactions.slice(0, 120).map(t =>
+        `"${t.date || '2026'}","${t.title}","${t.subtitle || ''}","${t.amount}"`
+      );
+      const csvContent = "data:text/csv;charset=utf-8," + [headers, ...rows].join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "Wise_Business_Mixalto_Ltd_Transactions_2026.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("Exported Wise_Business_Mixalto_Ltd_Transactions_2026.csv");
+    }
+
+    // Universal Interactive Feature Modal Builder (Covers all Payments, Header, Cards & Profile actions)
+    function openFeatureModal(featureKey) {
+      const box = document.getElementById("universal-feature-modal-content");
+      let html = "";
+
+      switch (featureKey) {
+        case "send-money":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Send money</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Send from your EUR balance (€9,080.00 available)</p>
+            <div class="space-y-4 mb-6">
+              <div>
+                <label class="block text-[12.5px] font-bold text-[#0e0f0c] mb-1">Recipient name or email</label>
+                <input id="send-recipient" type="text" value="Chinedu Okafor" class="w-full rounded-xl border border-[#868b82] px-3.5 py-2.5 text-[14px] font-semibold" />
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[12.5px] font-bold text-[#0e0f0c] mb-1">Amount (EUR)</label>
+                  <input id="send-amount" type="text" value="250.00" class="w-full rounded-xl border border-[#868b82] px-3.5 py-2.5 text-[14px] font-bold" />
+                </div>
+                <div>
+                  <label class="block text-[12.5px] font-bold text-[#0e0f0c] mb-1">Reference</label>
+                  <input type="text" value="Invoice #1048" class="w-full rounded-xl border border-[#868b82] px-3.5 py-2.5 text-[14px]" />
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end gap-3">
+              <button onclick="closeFeatureModal()" class="btn-wise-neutral py-2.5 px-5">Cancel</button>
+              <button onclick="closeFeatureModal(); showToast('Transfer queued from Mixalto Ltd EUR balance')" class="btn-wise-primary py-2.5 px-6">Continue to review</button>
+            </div>`;
+          break;
+
+        case "add-money":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Add money to EUR</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Top up your Mixalto Ltd Euro balance instantly.</p>
+            <div class="space-y-3 mb-6">
+              <div class="bg-[#f2f4f1] rounded-xl p-4 flex justify-between items-center">
+                <span class="font-bold text-[14px]">Amount to add</span>
+                <span class="font-extrabold text-[18px]">1,000.00 EUR</span>
+              </div>
+              <div class="border border-[#e6e8e5] rounded-xl p-4 flex justify-between items-center">
+                <div>
+                  <div class="font-bold text-[14px]">SEPA Instant Bank Transfer</div>
+                  <div class="text-[12.5px] text-[#5d6159]">0.00 EUR fee • Arrives in seconds</div>
+                </div>
+                <button onclick="closeFeatureModal(); openAccountDetailsModal('EUR')" class="btn-wise-secondary text-[12.5px] py-1.5 px-3.5">View IBAN</button>
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <button onclick="closeFeatureModal()" class="btn-wise-primary py-2.5 px-6">Done</button>
+            </div>`;
+          break;
+
+        case "get-paid":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Get paid</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Choose how you want your clients or marketplaces to pay Mixalto Ltd.</p>
+            <div class="space-y-3 mb-5">
+              <div onclick="closeFeatureModal(); openAccountDetailsModal('EUR')" class="solid-card">
+                <div>
+                  <div class="font-bold text-[14.5px]">Share your account details (IBAN / Sort code)</div>
+                  <div class="text-[12.5px] text-[#5d6159]">Receive EUR, GBP, USD, CAD and AED like a local</div>
+                </div>
+                <span class="text-[#163300] font-bold">→</span>
+              </div>
+              <div onclick="openFeatureModal('payment-links')" class="solid-card">
+                <div>
+                  <div class="font-bold text-[14.5px]">Create a Payment Link</div>
+                  <div class="text-[12.5px] text-[#5d6159]">https://wise.com/pay/b/mixaltoltd</div>
+                </div>
+                <span class="text-[#163300] font-bold">→</span>
+              </div>
+              <div onclick="openFeatureModal('create-invoices')" class="solid-card">
+                <div>
+                  <div class="font-bold text-[14.5px]">Create & send an official PDF Invoice</div>
+                  <div class="text-[12.5px] text-[#5d6159]">Includes your EUR IBAN and Wise payment link</div>
+                </div>
+                <span class="text-[#163300] font-bold">→</span>
+              </div>
+            </div>`;
+          break;
+
+        case "direct-debits":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Direct Debits</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">1 active SEPA Direct Debit mandate connected to your EUR account.</p>
+            <div class="bg-[#f2f4f1] rounded-2xl p-4 flex items-center justify-between mb-6">
+              <div class="flex items-center gap-3.5">
+                ${getTransactionIconHTML("cloudtalk")}
+                <div>
+                  <div class="font-bold text-[14.5px]">CloudTalk s.r.o.</div>
+                  <div class="text-[12.5px] text-[#5d6159]">Mandate ID: CTD-9948102 • Monthly billing</div>
+                </div>
+              </div>
+              <span class="bg-[#e2f6d5] text-[#007a27] text-[12px] font-bold px-3 py-1 rounded-full">Active</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <button onclick="showToast('Mandate protection verified')" class="btn-wise-neutral py-2 px-4 text-[13px]">Manage mandate</button>
+              <button onclick="closeFeatureModal()" class="btn-wise-primary py-2.5 px-6">Done</button>
+            </div>`;
+          break;
+
+        case "pay-invoices":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Pay Invoices</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Upload an invoice PDF/screenshot or forward bills to <span class="font-mono font-bold text-[#163300]">mixaltoltd@invoices.wise.com</span></p>
+            <div onclick="showToast('Sample invoice scanned — Ready for review')" class="border-2 border-dashed border-[#9fe870] bg-[#f2f4f1] rounded-2xl p-8 text-center cursor-pointer hover:bg-[#e7ebe5] mb-5">
+              <div class="text-[15px] font-bold text-[#163300] mb-1">Drop invoice PDF or image here</div>
+              <div class="text-[12.5px] text-[#5d6159]">Wise AI extracts IBAN, amount, and reference automatically</div>
+            </div>
+            <div class="flex justify-between items-center">
+              <button onclick="copyTextValue('mixaltoltd@invoices.wise.com', 'Invoice inbox email')" class="btn-wise-secondary py-2 px-4 text-[13px]">Copy invoice email</button>
+              <button onclick="closeFeatureModal()" class="btn-wise-primary py-2.5 px-6">Close</button>
+            </div>`;
+          break;
+
+        case "scheduled-transfers":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Scheduled transfers</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Upcoming automatic transfers from Mixalto Ltd.</p>
+            <div class="bg-[#f2f4f1] rounded-2xl p-4 flex items-center justify-between mb-6">
+              <div>
+                <div class="font-bold text-[14.5px]">Chinedu Okafor (Monthly Contractor Salary)</div>
+                <div class="text-[12.5px] text-[#5d6159]">Repeats monthly on the 15th • Lagos, Nigeria</div>
+              </div>
+              <div class="text-right">
+                <div class="font-extrabold text-[15px]">800.00 EUR</div>
+                <span class="text-[11.5px] text-[#007a27] font-bold">Scheduled</span>
+              </div>
+            </div>
+            <div class="flex justify-between">
+              <button onclick="openFeatureModal('send-money')" class="btn-wise-secondary py-2.5 px-5">+ Schedule new transfer</button>
+              <button onclick="closeFeatureModal()" class="btn-wise-primary py-2.5 px-6">Done</button>
+            </div>`;
+          break;
+
+        case "forward-conversions":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Forward conversions</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Lock in today's EUR/USD exchange rate (1.0865) for up to 12 months to protect your business margins.</p>
+            <div class="bg-[#f2f4f1] rounded-2xl p-4 space-y-2 text-[13.5px] mb-6">
+              <div class="flex justify-between"><span>Guaranteed pair</span><span class="font-bold">EUR → USD (1.0865)</span></div>
+              <div class="flex justify-between"><span>Available credit line</span><span class="font-bold">Up to 50,000.00 EUR</span></div>
+            </div>
+            <div class="flex justify-end gap-3">
+              <button onclick="closeFeatureModal(); showToast('Forward conversion access enabled for Mixalto Ltd')" class="btn-wise-primary py-2.5 px-6">Lock in rate</button>
+            </div>`;
+          break;
+
+        case "recurring-card":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Recurring card payments</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Active merchants authorized to charge your Wise Business cards.</p>
+            <div class="space-y-2.5 mb-6">
+              <div class="bg-[#f2f4f1] rounded-xl p-3.5 flex items-center justify-between">
+                <div class="flex items-center gap-3">${getTransactionIconHTML("tiktok")}<div><div class="font-bold text-[14px]">TikTok Ads & Promote</div><div class="text-[12px] text-[#5d6159]">Card •••• 3882 & •••• 5109</div></div></div>
+                <span class="bg-[#e2f6d5] text-[#007a27] text-[12px] font-bold px-3 py-1 rounded-full">Allowed</span>
+              </div>
+              <div class="bg-[#f2f4f1] rounded-xl p-3.5 flex items-center justify-between">
+                <div class="flex items-center gap-3">${getTransactionIconHTML("meta")}<div><div class="font-bold text-[14px]">Meta Platforms Ireland Ltd</div><div class="text-[12px] text-[#5d6159]">Card •••• 3882</div></div></div>
+                <span class="bg-[#e2f6d5] text-[#007a27] text-[12px] font-bold px-3 py-1 rounded-full">Allowed</span>
+              </div>
+              <div class="bg-[#f2f4f1] rounded-xl p-3.5 flex items-center justify-between">
+                <div class="flex items-center gap-3">${getTransactionIconHTML("zoho-cube")}<div><div class="font-bold text-[14px]">Zoho Workplace</div><div class="text-[12px] text-[#5d6159]">Card •••• 3973 • 4.80 EUR / mo</div></div></div>
+                <span class="bg-[#e2f6d5] text-[#007a27] text-[12px] font-bold px-3 py-1 rounded-full">Allowed</span>
+              </div>
+            </div>
+            <div class="flex justify-end"><button onclick="closeFeatureModal()" class="btn-wise-primary py-2.5 px-6">Done</button></div>`;
+          break;
+
+        case "batch-payments":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Batch payments</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Pay up to 1,000 contractors, suppliers, or employees at once with a single CSV file.</p>
+            <div onclick="showToast('Batch_Template_Wise_2026.csv downloaded')" class="border-2 border-dashed border-[#868b82] rounded-2xl p-7 text-center cursor-pointer hover:bg-[#f2f4f1] mb-5">
+              <div class="font-bold text-[14.5px] text-[#0e0f0c]">Upload CSV or XLSX batch file</div>
+              <div class="text-[12.5px] text-[#5d6159] mt-1">Click here to download the official Wise CSV template</div>
+            </div>
+            <div class="flex justify-end"><button onclick="closeFeatureModal()" class="btn-wise-primary py-2.5 px-6">Done</button></div>`;
+          break;
+
+        case "quick-pay":
+        case "payment-links":
+        case "qr-codes":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Quick Pay & QR Code — Mixalto Ltd</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Share your link or let customers scan your Wise Business QR code to pay instantly.</p>
+            <div class="bg-[#f2f4f1] rounded-2xl p-6 flex flex-col items-center text-center mb-5">
+              <div class="w-40 h-40 bg-white p-3 rounded-xl shadow-sm mb-3 flex items-center justify-center">
+                <svg viewBox="0 0 100 100" class="w-full h-full fill-[#163300]">
+                  <rect x="8" y="8" width="26" height="26" rx="3"/><rect x="13" y="13" width="16" height="16" fill="#fff"/><rect x="17" y="17" width="8" height="8"/>
+                  <rect x="66" y="8" width="26" height="26" rx="3"/><rect x="71" y="13" width="16" height="16" fill="#fff"/><rect x="75" y="17" width="8" height="8"/>
+                  <rect x="8" y="66" width="26" height="26" rx="3"/><rect x="13" y="71" width="16" height="16" fill="#fff"/><rect x="17" y="75" width="8" height="8"/>
+                  <rect x="42" y="12" width="8" height="8"/><rect x="42" y="26" width="14" height="8"/><rect x="42" y="42" width="16" height="16" rx="2"/>
+                  <rect x="14" y="44" width="18" height="8"/><rect x="64" y="44" width="22" height="8"/><rect x="44" y="68" width="10" height="20"/><rect x="64" y="64" width="24" height="24" rx="3"/>
+                  <rect x="70" y="70" width="12" height="12" fill="#9fe870"/>
+                </svg>
+              </div>
+              <div class="font-bold text-[15px] text-[#0e0f0c]">https://wise.com/pay/b/mixaltoltd</div>
+              <div class="text-[12.5px] text-[#5d6159] mt-0.5">Accepts Apple Pay, Google Pay, Cards & SEPA Instant</div>
+            </div>
+            <div class="flex justify-between">
+              <button onclick="copyTextValue('https://wise.com/pay/b/mixaltoltd', 'Payment link')" class="btn-wise-secondary py-2.5 px-5">Copy payment link</button>
+              <button onclick="closeFeatureModal()" class="btn-wise-primary py-2.5 px-6">Done</button>
+            </div>`;
+          break;
+
+        case "create-invoices":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Create an invoice</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Generate an official Mixalto Ltd PDF invoice with embedded EUR IBAN details.</p>
+            <div class="space-y-3.5 mb-6">
+              <div class="grid grid-cols-2 gap-3">
+                <div><label class="block text-[12px] font-bold mb-1">Invoice number</label><input type="text" value="INV-2026-089" class="w-full rounded-xl border border-[#868b82] px-3 py-2 text-[13.5px] font-bold"/></div>
+                <div><label class="block text-[12px] font-bold mb-1">Amount (EUR)</label><input type="text" value="200.00" class="w-full rounded-xl border border-[#868b82] px-3 py-2 text-[13.5px] font-bold"/></div>
+              </div>
+              <div><label class="block text-[12px] font-bold mb-1">Bill to (Client name or company)</label><input type="text" value="Nordic Digital Media AB" class="w-full rounded-xl border border-[#868b82] px-3 py-2 text-[13.5px]"/></div>
+            </div>
+            <div class="flex justify-end gap-3">
+              <button onclick="closeFeatureModal(); showToast('Invoice INV-2026-089 generated & downloaded')" class="btn-wise-primary py-2.5 px-6">Create & download PDF</button>
+            </div>`;
+          break;
+
+        case "payment-gateway":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Wise Payment Gateway</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Accept low-fee ecommerce card & local bank payments on your website.</p>
+            <div class="bg-[#f2f4f1] rounded-2xl p-4 space-y-2 text-[13.5px] mb-6">
+              <div class="flex justify-between"><span>Merchant ID</span><span class="font-mono font-bold">WPG_MIXALTO_99201</span></div>
+              <div class="flex justify-between"><span>Settlement account</span><span class="font-bold">EUR (BE68 9670 2489 1027 6415)</span></div>
+              <div class="flex justify-between"><span>Status</span><span class="text-[#007a27] font-bold">Active & Connected (Stripe / Shopify)</span></div>
+            </div>
+            <div class="flex justify-end"><button onclick="closeFeatureModal()" class="btn-wise-primary py-2.5 px-6">Done</button></div>`;
+          break;
+
+        case "wisetag":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Your Wisetag</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Anyone on Wise can pay Mixalto Ltd without needing your bank details.</p>
+            <div class="bg-[#f2f4f1] rounded-2xl p-5 flex items-center justify-between mb-6">
+              <div>
+                <div class="text-[18px] font-extrabold text-[#163300]">@mixaltoltd</div>
+                <div class="text-[12.5px] text-[#5d6159]">Discoverable by anyone on Wise</div>
+              </div>
+              <button onclick="copyTextValue('@mixaltoltd', 'Wisetag')" class="btn-wise-primary py-2 px-4">Copy Wisetag</button>
+            </div>
+            <div class="flex justify-end"><button onclick="closeFeatureModal()" class="btn-wise-neutral py-2 px-5">Close</button></div>`;
+          break;
+
+        case "auto-conversions":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Auto Conversions</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Automatically convert currencies when your target exchange rate is reached.</p>
+            <div class="bg-[#f2f4f1] rounded-2xl p-4 space-y-3 mb-6 text-[13.5px]">
+              <div class="flex justify-between"><span>Watch pair</span><span class="font-bold">1 EUR = 1.1000 USD</span></div>
+              <div class="flex justify-between"><span>Amount to convert</span><span class="font-bold">1,000.00 EUR</span></div>
+            </div>
+            <div class="flex justify-end gap-3">
+              <button onclick="closeFeatureModal(); showToast('Auto conversion order saved')" class="btn-wise-primary py-2.5 px-6">Create auto conversion</button>
+            </div>`;
+          break;
+
+        case "add-team-member":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Add team member</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Invite a colleague to Mixalto Ltd and set their permissions.</p>
+            <div class="space-y-3.5 mb-6">
+              <div>
+                <label class="block text-[12.5px] font-bold mb-1">Full name</label>
+                <input id="new-member-name" type="text" placeholder="e.g. Chinedu Okafor" class="w-full rounded-xl border border-[#868b82] px-3.5 py-2.5 text-[14px]" />
+              </div>
+              <div>
+                <label class="block text-[12.5px] font-bold mb-1">Email address</label>
+                <input id="new-member-email" type="text" placeholder="e.g. chinedu@mixalto.com" class="w-full rounded-xl border border-[#868b82] px-3.5 py-2.5 text-[14px]" />
+              </div>
+              <div>
+                <label class="block text-[12.5px] font-bold mb-1">Role</label>
+                <select id="new-member-role" class="w-full rounded-xl border border-[#868b82] px-3.5 py-2.5 text-[14px] font-semibold">
+                  <option value="Admin">Admin</option>
+                  <option value="Employee">Employee (Cardholder)</option>
+                  <option value="Accountant">Accountant (View & Export)</option>
+                </select>
+              </div>
+            </div>
+            <div class="flex justify-end gap-3">
+              <button onclick="closeFeatureModal()" class="btn-wise-neutral py-2.5 px-5">Cancel</button>
+              <button onclick="confirmAddTeamMember()" class="btn-wise-primary py-2.5 px-6">Send invite</button>
+            </div>`;
+          break;
+
+        case "travel-hub":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Travel hub</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Spend abroad in 160+ countries with the mid-market exchange rate and no hidden fees.</p>
+            <div class="bg-[#f2f4f1] rounded-2xl p-4 space-y-2.5 text-[13.5px] mb-6">
+              <div class="flex justify-between"><span>Fee-free ATM allowance</span><span class="font-bold text-[#007a27]">200.00 / 200.00 EUR left</span></div>
+              <div class="flex justify-between"><span>Smart auto-conversion</span><span class="font-bold">Enabled on all 3 cards</span></div>
+            </div>
+            <div class="flex justify-end"><button onclick="closeFeatureModal()" class="btn-wise-primary py-2.5 px-6">Done</button></div>`;
+          break;
+
+        case "statements":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Statements and reports</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Official stamped PDF & CSV documents for Mixalto Ltd (EUR, GBP, CAD).</p>
+            <div class="space-y-3 mb-6">
+              <div onclick="exportTransactionsCSV()" class="solid-card">
+                <div><div class="font-bold text-[14.5px]">Standard statement (Jul 24, 2026 – Oct 24, 2026)</div><div class="text-[12.5px] text-[#5d6159]">Includes all EUR income, TikTok/Meta Ads & Revolut transfers</div></div>
+                <span class="btn-wise-primary text-[12px] py-1 px-3">Download CSV</span>
+              </div>
+              <div onclick="showToast('Official stamped PDF Proof of Account Ownership downloaded')" class="solid-card">
+                <div><div class="font-bold text-[14.5px]">Account ownership certificate (IBAN BE68 9670 2489 1027 6415)</div><div class="text-[12.5px] text-[#5d6159]">Signed & stamped letter confirming Mixalto Ltd account details</div></div>
+                <span class="btn-wise-secondary text-[12px] py-1 px-3">Download PDF</span>
+              </div>
+            </div>
+            <div class="flex justify-end"><button onclick="closeFeatureModal()" class="btn-wise-neutral py-2 px-5">Close</button></div>`;
+          break;
+
+        case "referral":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Invite businesses & earn €100</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Earn €100 for every friend or business who joins Wise and spends €250.</p>
+            <div class="bg-[#f2f4f1] rounded-2xl p-4 flex items-center justify-between mb-6">
+              <span class="font-mono font-bold text-[13.5px]">https://wise.com/invite/b/mahboubehm</span>
+              <button onclick="copyTextValue('https://wise.com/invite/b/mahboubehm', 'Referral link')" class="btn-wise-primary py-1.5 px-4 text-[13px]">Copy link</button>
+            </div>
+            <div class="flex justify-end"><button onclick="closeFeatureModal()" class="btn-wise-neutral py-2 px-5">Done</button></div>`;
+          break;
+
+        case "open-balance":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Open a new balance or jar</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Hold and convert 40+ currencies in your Mixalto Ltd account.</p>
+            <div class="space-y-3 mb-6">
+              <div onclick="closeFeatureModal(); openAccountDetailsModal('USD')" class="solid-card">
+                <div><div class="font-bold text-[14.5px]">🇺🇸 US Dollar (USD) balance</div><div class="text-[12.5px] text-[#5d6159]">Includes local ACH routing & wire account number</div></div>
+                <span class="font-bold text-[#163300]">Open →</span>
+              </div>
+              <div onclick="openFeatureModal('interest-jar')" class="solid-card">
+                <div><div class="font-bold text-[14.5px]">🇪🇺 EUR Interest Jar (3.66% variable APY)</div><div class="text-[12.5px] text-[#5d6159]">Daily returns backed by BlackRock government bonds</div></div>
+                <span class="font-bold text-[#163300]">Explore →</span>
+              </div>
+            </div>`;
+          break;
+
+        case "business-details":
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Mixalto Ltd — Business profile</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Verified business information registered with Wise Europe SA.</p>
+            <div class="bg-[#f2f4f1] rounded-2xl p-5 space-y-3 text-[13.5px] mb-6">
+              <div class="flex justify-between border-b border-[#dcdfda] pb-2"><span class="text-[#5d6159]">Legal name</span><span class="font-bold">Mixalto Ltd</span></div>
+              <div class="flex justify-between border-b border-[#dcdfda] pb-2"><span class="text-[#5d6159]">Wise membership</span><span class="font-mono font-bold">P48291044</span></div>
+              <div class="flex justify-between border-b border-[#dcdfda] pb-2"><span class="text-[#5d6159]">Primary owner</span><span class="font-bold">MAHBOUBEH MEHRAFSHAN</span></div>
+              <div class="flex justify-between border-b border-[#dcdfda] pb-2"><span class="text-[#5d6159]">Administrator</span><span class="font-bold">SAHAR LEILABADI</span></div>
+              <div class="flex justify-between"><span class="text-[#5d6159]">Verification status</span><span class="text-[#007a27] font-bold">Verified ✓</span></div>
+            </div>
+            <div class="flex justify-end"><button onclick="closeFeatureModal()" class="btn-wise-primary py-2.5 px-6">Done</button></div>`;
+          break;
+
+        default:
+          html = `
+            <h2 class="text-[22px] font-extrabold text-[#0e0f0c] mb-1">Wise Business — Mixalto Ltd</h2>
+            <p class="text-[13.5px] text-[#5d6159] mb-5">Manage this setting directly from your verified EUR business account.</p>
+            <div class="bg-[#f2f4f1] rounded-2xl p-4 space-y-2.5 text-[13.5px] mb-6">
+              <div class="flex justify-between"><span>Account status</span><span class="font-bold text-[#007a27]">Active & Protected</span></div>
+              <div class="flex justify-between"><span>Primary balance</span><span class="font-bold">9,080.00 EUR</span></div>
+              <div class="flex justify-between"><span>Account owner</span><span class="font-bold">MAHBOUBEH MEHRAFSHAN</span></div>
+            </div>
+            <div class="flex justify-end"><button onclick="closeFeatureModal(); showToast('Settings updated')" class="btn-wise-primary py-2.5 px-6">Save & close</button></div>`;
+      }
+
+      box.innerHTML = html;
+      document.getElementById("modal-universal-feature").classList.remove("hidden");
+    }
+
+    function closeFeatureModal() {
+      document.getElementById("modal-universal-feature").classList.add("hidden");
+    }
+
+    function confirmAddTeamMember() {
+      const nameVal = (document.getElementById("new-member-name")?.value || "").trim().toUpperCase();
+      const emailVal = (document.getElementById("new-member-email")?.value || "").trim();
+      const roleVal = document.getElementById("new-member-role")?.value || "Employee";
+      if (!nameVal || !emailVal) {
+        showToast("Please enter name and email");
+        return;
+      }
+      const parts = nameVal.split(" ");
+      const initials = (parts[0]?.[0] || "T") + (parts[1]?.[0] || "M");
+      teamMembersData.push({
+        initials,
+        name: nameVal,
+        email: emailVal,
+        isYou: false,
+        role: roleVal,
+        permissions: "Can spend with assigned cards & submit receipts"
+      });
+      renderTeamMembersView();
+      closeFeatureModal();
+      showToast(`${nameVal} added to Mixalto Ltd team`);
+    }
+
+    let currentView = "home";
+
+    function handleBackClick() {
+      // If inside Card Detail subview, go back to Cards main view
+      const detailSub = document.getElementById("card-detail-subview");
+      if (currentView === "cards" && !detailSub.classList.contains("hidden")) {
+        detailSub.classList.add("hidden");
+        document.getElementById("cards-main-subview").classList.remove("hidden");
+        document.getElementById("top-back-btn").classList.add("hidden");
+        return;
+      }
+      switchView("home");
+    }
+
+    function switchView(viewName) {
+      currentView = viewName;
+      const views = ["home", "transactions", "cards", "payments", "team", "balance", "profile"];
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        if (el) el.classList.add("hidden");
+        const nav = document.getElementById(`nav-${v}`);
+        if (nav) nav.classList.remove("active");
+      });
+
+      const targetView = document.getElementById(`view-${viewName}`);
+      if (targetView) targetView.classList.remove("hidden");
+
+      const targetNav = document.getElementById(`nav-${viewName}`);
+      if (targetNav) targetNav.classList.add("active");
+
+      // Reset Cards subview state when navigating to Cards
+      if (viewName === "cards") {
+        document.getElementById("card-detail-subview").classList.add("hidden");
+        document.getElementById("cards-main-subview").classList.remove("hidden");
+      }
+
+      const backBtn = document.getElementById("top-back-btn");
+      const openBtn = document.getElementById("header-open-btn");
+
+      if (viewName === "transactions" || viewName === "balance" || viewName === "profile") {
+        backBtn.classList.remove("hidden");
+        openBtn.classList.add("hidden");
+      } else if (viewName === "home") {
+        backBtn.classList.add("hidden");
+        openBtn.classList.remove("hidden");
+      } else {
+        backBtn.classList.add("hidden");
+        openBtn.classList.add("hidden");
+      }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Interactive Transfer Calculator (EUR <-> USD)
+    const RATE = 1.0865;
+    const FEE = 4.20;
+
+    function updateCalculator(source) {
+      const eurInput = document.getElementById("calc-eur");
+      const usdInput = document.getElementById("calc-usd");
+
+      if (source === "eur") {
+        const raw = parseFloat(eurInput.value.replace(/,/g, "")) || 0;
+        const net = Math.max(0, raw - FEE);
+        const converted = (net * RATE).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        usdInput.value = converted;
+      } else {
+        const rawUsd = parseFloat(usdInput.value.replace(/,/g, "")) || 0;
+        const neededEur = (rawUsd / RATE) + FEE;
+        eurInput.value = neededEur.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+    }
+
+    function swapCalculator() {
+      const eurInput = document.getElementById("calc-eur");
+      const usdInput = document.getElementById("calc-usd");
+      const temp = eurInput.value;
+      eurInput.value = usdInput.value;
+      usdInput.value = temp;
+    }
+
+    // Initialize everything on load
+    window.onload = function () {
+      renderCardsList();
+      renderTeamCardsList();
+      renderTeamMembersView();
+      renderHomePreviewTransactions();
+      renderTransactions();
+    };
+  </script>
+</body>
+</html>
